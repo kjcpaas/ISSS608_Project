@@ -1,0 +1,47 @@
+---
+title: "Project Proposal"
+---
+
+::: {.callout-note appearance="simple"}
+Proposal based on: <https://decoding-chaos.netlify.app/team/projectproposal/projectproposal>
+
+MC3 questions:
+
+1 & 2: Fengji
+
+3 & 4: Joy
+:::
+
+# Motivation
+
+Fengji
+
+# Objectives
+
+Fengji
+
+# Problem Statement
+
+Fengji
+
+# Data
+
+Joy
+
+# Methodology & Analytical Approach
+
+Joy
+
+# **Prototype Sketches**
+
+Both, depending on question part
+
+# **R Packages**
+
+-   *tidyverse*
+
+Add as needed
+
+# Project Schedule
+
+Fengji
