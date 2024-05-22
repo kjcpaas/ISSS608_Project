@@ -1,0 +1,110 @@
+---
+title: "Meeting Minutes"
+---
+
+# ISSS608 Group 4 Meeting Minutes
+
+## Project Meeting 1
+
+**Date:** 13/05/2024
+
+**Time:** 9:00 - 9:30PM
+
+**In Attendance:** Kristine Joy Paas, Tan Fengji
+
+### Agenda Items
+
+1.  Discussion on project topic
+2.  Action Items
+
+### Agenda Item 1: Discussion on project topic
+
+-   Prior to the meeting, we have agreed on reading the different challenges from [VAST Challenge 2024](https://vast-challenge.github.io/2024/index.html) so that we can each choose our preference.
+
+-   We disagreed on the challenge to do as Fengji prefers [MC1](https://vast-challenge.github.io/2024/MC1.html), while Kristine prefers [MC3](https://vast-challenge.github.io/2024/MC3.html).
+
+-   We have a headstart with MC1 as techniques for Text Data Analysis were already covered in class.
+
+-   However, Kristine raised the issue of lack of knowledge in how to identify bias in the text data.
+
+-   We also talked about the gap in what the different challenges require vs our own knowledge, e.g., how to detect bias, anomalies in geographic data.
+
+### Agenda Item 2: Action Items
+
+-   We were not able to decide on the topic on this meeting and decided to reconvene during the next class (18/05).
+
+-   Read on the challenges again and research on the knowledge gaps we discovered.
+
+## Project Meeting 2
+
+::: {.callout-note appearance="minimal" icon="false"}
+This is just a short meeting during the break in class.
+:::
+
+**Date:** 18/05/2024
+
+**Time:** 2:15 - 2:25 PM
+
+**In Attendance:** Kristine Joy Paas, Tan Fengji
+
+### Agenda Items
+
+1.  Decide on project topic
+2.  Division of tasks for Project Proposal.
+
+### Agenda Item 1: Decide on project topic
+
+-   We agreed to go with [MC3](https://vast-challenge.github.io/2024/MC3.html). We think that this is the challenge we can accomplish with our own knowledge and those taught in class.
+
+### Agenda Item 2: Division of tasks for Project Proposal
+
+We looked at the seniors' work so that we can base on our Project Proposal on from those.
+
+-   We divided the work for the proposal as follows:
+
+    -   Fengji: Motivation, Objectives, Problem Statement, Project Schedule
+
+    -   Kristine: Data, Methodology, Github and Netlify setup
+
+    -   Shared: Project Sketches, R Package list
+
+-   Furthermore, for Take-home Ex3, we decided on the following:
+
+    -   Fengji: Questions 1 & 2
+
+    -   Kristine: Questions 3 & 4
+
+If we have enough time, we will do 1 more question so that we can compare notes on the overlapping question.
+
+## Project Meeting 3
+
+**Date:** 22/05/2024
+
+**Time:** 4:30 - 5:00 PM
+
+**In Attendance:** Kristine Joy Paas, Tan Fengji
+
+### Agenda Items
+
+1.  Proposal Check-in
+2.  Action Items
+
+### Agenda Item 1: Proposal Check-in
+
+-   It was only a few days before the proposal is due so we checked on each other's progress.
+
+    -   We both have our parts ready by EoD.
+
+-   Kristine updated that she won't be available on Sunday (when the proposal is due).
+
+-   We decided to drop the **Problem Statement** part as it is redundant with the **Objectives**.
+
+-   We also decided for **Prototype Sketches** to be optional as we are not familiar how it will look in the Shiny app. Alternative is to just provide sketches based on normal visualizations.
+
+-   Our main blocker in creating the proposal is the lack of details that we cannot uncover unless we start doing the project.
+
+### Agenda Item 2: Action Items
+
+-   Push our work on the Project Proposal to Github so that we can check each other's work.
+
+-   Fengji to take care of submission on Sunday as Kristine will be out.

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>NetWeaver - Project Proposal</title>
+<title>NetWeaver - Meeting Minutes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,40 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -133,11 +99,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./proposal.html" aria-current="page"> 
+    <a class="nav-link" href="./proposal.html"> 
 <span class="menu-text">Project Proposal</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./meeting_minutes.html"> 
+    <a class="nav-link active" href="./meeting_minutes.html" aria-current="page"> 
 <span class="menu-text">Meeting Minutes</span></a>
   </li>  
 </ul>
@@ -156,13 +122,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation">Motivation</a></li>
-  <li><a href="#objectives" id="toc-objectives" class="nav-link" data-scroll-target="#objectives">Objectives</a></li>
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
-  <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology">Methodology</a></li>
-  <li><a href="#prototype-sketches" id="toc-prototype-sketches" class="nav-link" data-scroll-target="#prototype-sketches"><strong>Prototype Sketches</strong></a></li>
-  <li><a href="#r-packages" id="toc-r-packages" class="nav-link" data-scroll-target="#r-packages"><strong>R Packages</strong></a></li>
-  <li><a href="#project-schedule" id="toc-project-schedule" class="nav-link" data-scroll-target="#project-schedule">Project Schedule</a></li>
+  <li><a href="#isss608-group-4-meeting-minutes" id="toc-isss608-group-4-meeting-minutes" class="nav-link active" data-scroll-target="#isss608-group-4-meeting-minutes">ISSS608 Group 4 Meeting Minutes</a>
+  <ul class="collapse">
+  <li><a href="#project-meeting-1" id="toc-project-meeting-1" class="nav-link" data-scroll-target="#project-meeting-1">Project Meeting 1</a>
+  <ul class="collapse">
+  <li><a href="#agenda-items" id="toc-agenda-items" class="nav-link" data-scroll-target="#agenda-items">Agenda Items</a></li>
+  <li><a href="#agenda-item-1-discussion-on-project-topic" id="toc-agenda-item-1-discussion-on-project-topic" class="nav-link" data-scroll-target="#agenda-item-1-discussion-on-project-topic">Agenda Item 1: Discussion on project topic</a></li>
+  <li><a href="#agenda-item-2-action-items" id="toc-agenda-item-2-action-items" class="nav-link" data-scroll-target="#agenda-item-2-action-items">Agenda Item 2: Action Items</a></li>
+  </ul></li>
+  <li><a href="#project-meeting-2" id="toc-project-meeting-2" class="nav-link" data-scroll-target="#project-meeting-2">Project Meeting 2</a>
+  <ul class="collapse">
+  <li><a href="#agenda-items-1" id="toc-agenda-items-1" class="nav-link" data-scroll-target="#agenda-items-1">Agenda Items</a></li>
+  <li><a href="#agenda-item-1-decide-on-project-topic" id="toc-agenda-item-1-decide-on-project-topic" class="nav-link" data-scroll-target="#agenda-item-1-decide-on-project-topic">Agenda Item 1: Decide on project topic</a></li>
+  <li><a href="#agenda-item-2-division-of-tasks-for-project-proposal" id="toc-agenda-item-2-division-of-tasks-for-project-proposal" class="nav-link" data-scroll-target="#agenda-item-2-division-of-tasks-for-project-proposal">Agenda Item 2: Division of tasks for Project Proposal</a></li>
+  </ul></li>
+  <li><a href="#project-meeting-3" id="toc-project-meeting-3" class="nav-link" data-scroll-target="#project-meeting-3">Project Meeting 3</a>
+  <ul class="collapse">
+  <li><a href="#agenda-items-2" id="toc-agenda-items-2" class="nav-link" data-scroll-target="#agenda-items-2">Agenda Items</a></li>
+  <li><a href="#agenda-item-1-proposal-check-in" id="toc-agenda-item-1-proposal-check-in" class="nav-link" data-scroll-target="#agenda-item-1-proposal-check-in">Agenda Item 1: Proposal Check-in</a></li>
+  <li><a href="#agenda-item-2-action-items-1" id="toc-agenda-item-2-action-items-1" class="nav-link" data-scroll-target="#agenda-item-2-action-items-1">Agenda Item 2: Action Items</a></li>
+  </ul></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -171,7 +151,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Project Proposal</h1>
+<h1 class="title">Meeting Minutes</h1>
 </div>
 
 
@@ -188,107 +168,120 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>Proposal based on: <a href="https://decoding-chaos.netlify.app/team/projectproposal/projectproposal" class="uri">https://decoding-chaos.netlify.app/team/projectproposal/projectproposal</a></p>
-<p>MC3 questions:</p>
-<p>1 &amp; 2: Fengji</p>
-<p>3 &amp; 4: Joy</p>
-</div>
-</div>
-</div>
-<section id="motivation" class="level1">
-<h1>Motivation</h1>
-<p>The motivation for this project stems from the urgent need to combat illegal fishing activities in the sensitive marine ecosystem of Oceanus. FishEye International aims to protect this environment by monitoring and analyzing business activities of commercial fishing operators. This project seeks to enhance the ability of FishEye’s analysts to visualize and understand complex business networks, and further aiding in the detection and prevention of illegal fishing.</p>
-</section>
-<section id="objectives" class="level1">
-<h1>Objectives</h1>
-<p>This project aims to build an interactive visualization tool to enable FishEye’s analysts to effectively interpret the following changes related to illegal fishing on the business community:</p>
+<section id="isss608-group-4-meeting-minutes" class="level1">
+<h1>ISSS608 Group 4 Meeting Minutes</h1>
+<section id="project-meeting-1" class="level2">
+<h2 class="anchored" data-anchor-id="project-meeting-1">Project Meeting 1</h2>
+<p><strong>Date:</strong> 13/05/2024</p>
+<p><strong>Time:</strong> 9:00 - 9:30PM</p>
+<p><strong>In Attendance:</strong> Kristine Joy Paas, Tan Fengji</p>
+<section id="agenda-items" class="level3">
+<h3 class="anchored" data-anchor-id="agenda-items">Agenda Items</h3>
 <ol type="1">
-<li><p><strong>Temporal patterns and corporate structures</strong>: Highlight temporal patterns and corporate structures changes for analysts to track shareholders over time.</p></li>
-<li><p><strong>Business Transactions</strong>: Identify typical and atypical business transactions and infer the motivations behind these activities.</p></li>
-<li><p><strong>Network Influence</strong>: Examine how the influence of a company changes over time within the business network.</p></li>
-<li><p><strong>SouthSeafood Express Corp Network</strong>: Visualize the network associated with SouthSeafood Express Corp and analyze how the network have changed due to the illegal fishing incident. Identify companies that benefited from SouthSeafood Express Corp’s legal troubles and potentially related transactions.</p></li>
+<li>Discussion on project topic</li>
+<li>Action Items</li>
 </ol>
 </section>
-<section id="data" class="level1">
-<h1>Data</h1>
-<p>The project will examine the data from VAST Challenge 2024 <a href="https://vast-challenge.github.io/2024/MC3.html">Mini-Challenge 3</a>. The data contains the network for Oceanus’s commercial fishing business community. It contains 60,520 nodes, 75,817 edges, and 4,782 connected components.</p>
-<p>Each node represents the entities in the fishing business community (including people and organizations). The edges represent the relationship between each pair of connected nodes.</p>
-</section>
-<section id="methodology" class="level1">
-<h1>Methodology</h1>
-<p>The team will take the following approach:</p>
-<ol type="1">
-<li><p><strong>Data Preparation:</strong> Cleaning and shaping data to what is needed for analysis. The following data will be prepared:</p>
+<section id="agenda-item-1-discussion-on-project-topic" class="level3">
+<h3 class="anchored" data-anchor-id="agenda-item-1-discussion-on-project-topic">Agenda Item 1: Discussion on project topic</h3>
 <ul>
-<li>Node and edge data for network data analysis. @We will only use the 4,782 connected components in plotting the network data</li>
-<li>Non-network data for accompanying information, if needed (e.g.&nbsp;how many people involved, information about companies involved in fishing business)</li>
-</ul></li>
-<li><p><strong>Data Exploration &amp; Visualization:</strong> To identify patterns in the data and derive insights from them. We will use the following visualization methods:</p>
-<ul>
-<li><p>Network graphs to see relationship between entities</p></li>
-<li><p>Interactive and/or animated graphs to see how relationships change through time</p></li>
-<li><p>Shiny app for users to interact and change parameters for analysis</p></li>
-</ul></li>
-<li><p><strong>Statistical Analysis:</strong> To test and evaluate or hypothesis.</p>
-<ul>
-<li><p>Network centrality inidices (e.g., betweenness centrality)</p></li>
-<li><p>Community, to identify clusters of closely-knit nodes.</p></li>
-</ul></li>
-</ol>
-</section>
-<section id="prototype-sketches" class="level1">
-<h1><strong>Prototype Sketches</strong></h1>
-<p>Both, depending on question part</p>
-</section>
-<section id="r-packages" class="level1">
-<h1><strong>R Packages</strong></h1>
-<ul>
-<li><a href="https://www.tidyverse.org/">tidyverse</a>: A collection of R packages used in data science, which includes <a href="https://ggplot2.tidyverse.org/">ggplot2</a>, <a href="https://tibble.tidyverse.org/">tibble</a>, <a href="https://readr.tidyverse.org/">readr</a></li>
-<li><a href="https://github.com/shosaco/vistime">vistime</a>: For visualizing timelines</li>
-<li><a href="https://ggraph.data-imaginist.com/">ggraph</a>: Extension of <code>ggplot2</code> for plotting relational data</li>
-<li><a href="https://datastorm-open.github.io/visNetwork/">visNetwork</a>: For plotting interactive network visualizations, compatible with Shiny</li>
-<li><a href="https://cran.r-project.org/web/packages/jsonlite/index.html">jsonlite</a>: For parsing JSON data</li>
+<li><p>Prior to the meeting, we have agreed on reading the different challenges from <a href="https://vast-challenge.github.io/2024/index.html">VAST Challenge 2024</a> so that we can each choose our preference.</p></li>
+<li><p>We disagreed on the challenge to do as Fengji prefers <a href="https://vast-challenge.github.io/2024/MC1.html">MC1</a>, while Kristine prefers <a href="https://vast-challenge.github.io/2024/MC3.html">MC3</a>.</p></li>
+<li><p>We have a headstart with MC1 as techniques for Text Data Analysis were already covered in class.</p></li>
+<li><p>However, Kristine raised the issue of lack of knowledge in how to identify bias in the text data.</p></li>
+<li><p>We also talked about the gap in what the different challenges require vs our own knowledge, e.g., how to detect bias, anomalies in geographic data.</p></li>
 </ul>
 </section>
-<section id="project-schedule" class="level1">
-<h1>Project Schedule</h1>
-<div class="cell">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(vistime, ggplot2)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">text=</span><span class="st">"event,group,start,end,color</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="st">                       ,Project Proposal,2024-05-12,2024-05-26,#a5d6a7</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="st">                       ,Exploratory data analysis,2024-05-12,2024-05-26,#a5d6a7</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">                       ,Exploratory data analysis,2024-05-26,2024-06-16,#DD4B39</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">                       ,R Quarto/ Netlify,2024-05-12,2024-05-26,#a5d6a7</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">                       ,R Quarto/ Netlify,2024-05-26,2024-06-30,#DD4B39</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">                       ,R Shiny App,2024-05-26,2024-06-30,#DD4B39</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="st">                       ,Poster,2024-06-16,2024-06-30,#DD4B39</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">                       ,User Guide,2024-06-20,2024-06-30,#DD4B39"</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                 )</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>proposal_deadline <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">"2024-05-26"</span>) </span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">gg_vistime</span>(data, <span class="at">title =</span> <span class="st">"Project Timeline"</span>) </span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.numeric</span>(<span class="fu">as.POSIXct</span>(<span class="st">"2024-05-26"</span>)), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="proposal_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<section id="agenda-item-2-action-items" class="level3">
+<h3 class="anchored" data-anchor-id="agenda-item-2-action-items">Agenda Item 2: Action Items</h3>
+<ul>
+<li><p>We were not able to decide on the topic on this meeting and decided to reconvene during the next class (18/05).</p></li>
+<li><p>Read on the challenges again and research on the knowledge gaps we discovered.</p></li>
+</ul>
+</section>
+</section>
+<section id="project-meeting-2" class="level2">
+<h2 class="anchored" data-anchor-id="project-meeting-2">Project Meeting 2</h2>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>This is just a short meeting during the break in class.</p>
 </div>
 </div>
 </div>
+<p><strong>Date:</strong> 18/05/2024</p>
+<p><strong>Time:</strong> 2:15 - 2:25 PM</p>
+<p><strong>In Attendance:</strong> Kristine Joy Paas, Tan Fengji</p>
+<section id="agenda-items-1" class="level3">
+<h3 class="anchored" data-anchor-id="agenda-items-1">Agenda Items</h3>
+<ol type="1">
+<li>Decide on project topic</li>
+<li>Division of tasks for Project Proposal.</li>
+</ol>
+</section>
+<section id="agenda-item-1-decide-on-project-topic" class="level3">
+<h3 class="anchored" data-anchor-id="agenda-item-1-decide-on-project-topic">Agenda Item 1: Decide on project topic</h3>
+<ul>
+<li>We agreed to go with <a href="https://vast-challenge.github.io/2024/MC3.html">MC3</a>. We think that this is the challenge we can accomplish with our own knowledge and those taught in class.</li>
+</ul>
+</section>
+<section id="agenda-item-2-division-of-tasks-for-project-proposal" class="level3">
+<h3 class="anchored" data-anchor-id="agenda-item-2-division-of-tasks-for-project-proposal">Agenda Item 2: Division of tasks for Project Proposal</h3>
+<p>We looked at the seniors’ work so that we can base on our Project Proposal on from those.</p>
+<ul>
+<li><p>We divided the work for the proposal as follows:</p>
+<ul>
+<li><p>Fengji: Motivation, Objectives, Problem Statement, Project Schedule</p></li>
+<li><p>Kristine: Data, Methodology, Github and Netlify setup</p></li>
+<li><p>Shared: Project Sketches, R Package list</p></li>
+</ul></li>
+<li><p>Furthermore, for Take-home Ex3, we decided on the following:</p>
+<ul>
+<li><p>Fengji: Questions 1 &amp; 2</p></li>
+<li><p>Kristine: Questions 3 &amp; 4</p></li>
+</ul></li>
+</ul>
+<p>If we have enough time, we will do 1 more question so that we can compare notes on the overlapping question.</p>
+</section>
+</section>
+<section id="project-meeting-3" class="level2">
+<h2 class="anchored" data-anchor-id="project-meeting-3">Project Meeting 3</h2>
+<p><strong>Date:</strong> 22/05/2024</p>
+<p><strong>Time:</strong> 4:30 - 5:00 PM</p>
+<p><strong>In Attendance:</strong> Kristine Joy Paas, Tan Fengji</p>
+<section id="agenda-items-2" class="level3">
+<h3 class="anchored" data-anchor-id="agenda-items-2">Agenda Items</h3>
+<ol type="1">
+<li>Proposal Check-in</li>
+<li>Action Items</li>
+</ol>
+</section>
+<section id="agenda-item-1-proposal-check-in" class="level3">
+<h3 class="anchored" data-anchor-id="agenda-item-1-proposal-check-in">Agenda Item 1: Proposal Check-in</h3>
+<ul>
+<li><p>It was only a few days before the proposal is due so we checked on each other’s progress.</p>
+<ul>
+<li>We both have our parts ready by EoD.</li>
+</ul></li>
+<li><p>Kristine updated that she won’t be available on Sunday (when the proposal is due).</p></li>
+<li><p>We decided to drop the <strong>Problem Statement</strong> part as it is redundant with the <strong>Objectives</strong>.</p></li>
+<li><p>We also decided for <strong>Prototype Sketches</strong> to be optional as we are not familiar how it will look in the Shiny app. Alternative is to just provide sketches based on normal visualizations.</p></li>
+<li><p>Our main blocker in creating the proposal is the lack of details that we cannot uncover unless we start doing the project.</p></li>
+</ul>
+</section>
+<section id="agenda-item-2-action-items-1" class="level3">
+<h3 class="anchored" data-anchor-id="agenda-item-2-action-items-1">Agenda Item 2: Action Items</h3>
+<ul>
+<li><p>Push our work on the Project Proposal to Github so that we can check each other’s work.</p></li>
+<li><p>Fengji to take care of submission on Sunday as Kristine will be out.</p></li>
+</ul>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->

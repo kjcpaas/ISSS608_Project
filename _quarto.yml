@@ -11,6 +11,8 @@ website:
     right: 
       - href: proposal.qmd
         text: Project Proposal
+      - href: meeting_minutes.qmd
+        text: Meeting Minutes
 format:
   html:
     theme: cosmo
