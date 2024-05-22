@@ -26,7 +26,7 @@ This project aims to build an interactive visualization tool to enable FishEye�
 
 3.  **Network Influence**: Examine how the influence of a company changes over time within the business network.
 
-4.  **SohthSeafood Express Corp Network**: Visualize the network associated with SouthSeafood Express Corp and analyze how the network have changed due to the illegal fishing incident. Identify companies that benefited from SouthSeafood Express Corp’s legal troubles and potentially related transcations.
+4.  **SouthSeafood Express Corp Network**: Visualize the network associated with SouthSeafood Express Corp and analyze how the network have changed due to the illegal fishing incident. Identify companies that benefited from SouthSeafood Express Corp’s legal troubles and potentially related transactions.
 
 # Data
 
