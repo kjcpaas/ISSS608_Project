@@ -30,11 +30,32 @@ This project aims to build an interactive visualization tool to enable FishEyeâ€
 
 # Data
 
-Joy
+The project will examine the data from VAST Challenge 2024 [Mini-Challenge 3](https://vast-challenge.github.io/2024/MC3.html). The data contains the network for Oceanusâ€™s commercial fishing business community. It contains 60,520 nodes, 75,817 edges, and 4,782 connected components.
 
-# Methodology & Analytical Approach
+Each node represents the entities in the fishing business community (including people and organizations). The edges represent the relationship between each pair of connected nodes.
 
-Joy
+# Methodology
+
+The team will take the following approach:
+
+1.  **Data Preparation:** Cleaning and shaping data to what is needed for analysis. The following data will be prepared:
+
+    -   Node and edge data for network data analysis. \@We will only use the 4,782 connected components in plotting the network data
+    -   Non-network data for accompanying information, if needed (e.g. how many people involved, information about companies involved in fishing business)
+
+2.  **Data Exploration & Visualization:** To identify patterns in the data and derive insights from them. We will use the following visualization methods:
+
+    -   Network graphs to see relationship between entities
+
+    -   Interactive and/or animated graphs to see how relationships change through time
+
+    -   Shiny app for users to interact and change parameters for analysis
+
+3.  **Statistical Analysis:** To test and evaluate or hypothesis.
+
+    -   Network centrality inidices (e.g., betweenness centrality)
+
+    -   Community, to identify clusters of closely-knit nodes.
 
 # **Prototype Sketches**
 
@@ -42,10 +63,11 @@ Both, depending on question part
 
 # **R Packages**
 
--   *tidyverse*
--   *vistime*
-
-Add as needed
+-   [tidyverse](https://www.tidyverse.org/): A collection of R packages used in data science, which includes [ggplot2](https://ggplot2.tidyverse.org/), [tibble](https://tibble.tidyverse.org/), [readr](https://readr.tidyverse.org/)
+-   [vistime](https://github.com/shosaco/vistime): For visualizing timelines
+-   [ggraph](https://ggraph.data-imaginist.com/): Extension of `ggplot2` for plotting relational data
+-   [visNetwork](https://datastorm-open.github.io/visNetwork/): For plotting interactive network visualizations, compatible with Shiny
+-   [jsonlite](https://cran.r-project.org/web/packages/jsonlite/index.html): For parsing JSON data
 
 # Project Schedule
 
@@ -53,8 +75,7 @@ Add as needed
 #| code-fold: true
 #| warning: false
 #| code-summary: "Show code"
-library(vistime)
-library(ggplot2)
+pacman::p_load(vistime, ggplot2)
 data <- read.csv(text="event,group,start,end,color
                        ,Project Proposal,2024-05-12,2024-05-26,#a5d6a7
                        ,Exploratory data analysis,2024-05-12,2024-05-26,#a5d6a7
