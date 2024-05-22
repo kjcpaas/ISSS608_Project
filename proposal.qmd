@@ -14,15 +14,19 @@ MC3 questions:
 
 # Motivation
 
-Fengji
+The motivation for this project stems from the urgent need to combat illegal fishing activities in the sensitive marine ecosystem of Oceanus. FishEye International aims to protect this environment by monitoring and analyzing business activities of commercial fishing operators. This project seeks to enhance the ability of FishEye’s analysts to visualize and understand complex business networks, and further aiding in the detection and prevention of illegal fishing.
 
 # Objectives
 
-Fengji
+This project aims to build an interactive visualization tool to enable FishEye’s analysts to effectively interpret the following changes related to illegal fishing on the business community:
 
-# Problem Statement
+1.  **Temporal patterns and corporate structures**: Highlight temporal patterns and corporate structures changes for analysts to track shareholders over time.
 
-Fengji
+2.  **Business Transactions**: Identify typical and atypical business transactions and infer the motivations behind these activities.
+
+3.  **Network Influence**: Examine how the influence of a company changes over time within the business network.
+
+4.  **SohthSeafood Express Corp Network**: Visualize the network associated with SouthSeafood Express Corp and analyze how the network have changed due to the illegal fishing incident. Identify companies that benefited from SouthSeafood Express Corp’s legal troubles and potentially related transcations.
 
 # Data
 
@@ -39,9 +43,32 @@ Both, depending on question part
 # **R Packages**
 
 -   *tidyverse*
+-   *vistime*
 
 Add as needed
 
 # Project Schedule
 
-Fengji
+```{r}
+#| code-fold: true
+#| warning: false
+#| code-summary: "Show code"
+library(vistime)
+library(ggplot2)
+data <- read.csv(text="event,group,start,end,color
+                       ,Project Proposal,2024-05-12,2024-05-26,#a5d6a7
+                       ,Exploratory data analysis,2024-05-12,2024-05-26,#a5d6a7
+                       ,Exploratory data analysis,2024-05-26,2024-06-16,#DD4B39
+                       ,R Quarto/ Netlify,2024-05-12,2024-05-26,#a5d6a7
+                       ,R Quarto/ Netlify,2024-05-26,2024-06-30,#DD4B39
+                       ,R Shiny App,2024-05-26,2024-06-30,#DD4B39
+                       ,Poster,2024-06-16,2024-06-30,#DD4B39
+                       ,User Guide,2024-06-20,2024-06-30,#DD4B39"
+                 )
+                
+proposal_deadline <- as.Date("2024-05-26") 
+
+p <- gg_vistime(data, title = "Project Timeline") 
+p +
+  geom_vline(xintercept = as.numeric(as.POSIXct("2024-05-26")), color = "red", size = 1)
+```
