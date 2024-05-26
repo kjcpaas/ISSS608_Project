@@ -59,7 +59,25 @@ The team will take the following approach:
 
 # **Prototype Sketches**
 
-Both, depending on question part
+1.  Temporal patterns and corporate structures:
+
+    Create detailed feature timelines that cover various time periods, such as monthly, quarterly, and yearly intervals. These timelines should be meticulously organized to allow analysts to track changes and trends over time effectively. In addition, integrate the corresponding company structures into these timelines to provide a comprehensive view. This integration helps analysts understand the context behind the data and correlating features with organizational changes. By binding the timelines with company structures, analysts can easily identify patterns, pinpoint causes of anomalies, and make informed predictions.
+
+2.  Business Transactions:
+
+    Convert transactions into embeddings using a Large Language Model (LLM) or another suitable encoding framework. This process involves transforming transactional data into a format that captures its semantic and contextual meaning, making it easier to analyze and interpret. Once the transactions are embedded, apply advanced anomaly detection techniques to identify unusual patterns or deviations from expected behavior. These anomalies might indicate potential issues, fraudulent activities, or areas requiring further investigation.
+
+    To understand the motivations behind these anomalies, leverage business heuristics and insights derived from the LLM interpretations. This combined approach ensures a thorough examination of anomalies, enabling more accurate and actionable insights into the underlying motivations and potential implications for the business.
+
+3.  Network Influence:
+
+    Given some specific companies, construct its business network by mapping out the relationships and interactions between various entities. Utilize data sources to construct these connections. Once the network is established, plot the network to visualize the impact of each entity within the network. This visualization helps identify central nodes and influential entities that significantly affect the company's operations and strategic decisions.
+
+4.  SouthSeafood Express Corp Network:
+
+    Based on the previously constructed business network, identify the relevant companies involved in the illegal fishing activity. Begin by analyzing the network to spot entities with suspicious patterns or connections that suggest involvement in illegal practices.
+
+    Once the potentially involved companies are identified, delve into their transaction histories to uncover detailed evidence of their involvement. We can thus map out the methods and routes used for illegal fishing operations.
 
 # **R Packages**
 
