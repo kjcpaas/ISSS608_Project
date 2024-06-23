@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>NetWeaver - Project Proposal</title>
+<title>The Big Fish - Project Proposal</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -100,6 +100,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<meta name="mermaid-theme" content="default">
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="styles.css">
@@ -113,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">NetWeaver</span>
+    <span class="navbar-title">The Big Fish</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -220,19 +224,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>Proposal based on: <a href="https://decoding-chaos.netlify.app/team/projectproposal/projectproposal" class="uri">https://decoding-chaos.netlify.app/team/projectproposal/projectproposal</a></p>
-<p>MC3 questions:</p>
-<p>1 &amp; 2: Fengji</p>
-<p>3 &amp; 4: Joy</p>
-</div>
-</div>
-</div>
 <section id="motivation" class="level1">
 <h1>Motivation</h1>
 <p>The motivation for this project stems from the urgent need to combat illegal fishing activities in the sensitive marine ecosystem of Oceanus. FishEye International aims to protect this environment by monitoring and analyzing business activities of commercial fishing operators. This project seeks to enhance the ability of FishEye’s analysts to visualize and understand complex business networks, and further aiding in the detection and prevention of illegal fishing.</p>
@@ -250,29 +241,98 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="data" class="level1">
 <h1>Data</h1>
 <p>The project will examine the data from VAST Challenge 2024 <a href="https://vast-challenge.github.io/2024/MC3.html">Mini-Challenge 3</a>. The data contains the network for Oceanus’s commercial fishing business community. It contains 60,520 nodes, 75,817 edges, and 4,782 connected components.</p>
-<p>Each node represents the entities in the fishing business community (including people and organizations). The edges represent the relationship between each pair of connected nodes.</p>
+<p>Each node represents the entities in the fishing business community (including people and organizations). The edges represent the relationship or transactions between each pair of connected nodes.</p>
 </section>
 <section id="methodology" class="level1">
 <h1>Methodology</h1>
-<p>The team will take the following approach:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Diagram</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Explanation</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TB
+  A[Data Wrangling]
+  B[Visualizing corporate structures]
+  C[Visualizing temporal changes]
+  D(Extracting subnetworks)
+  E(Extracting network state through time)
+  F[[Identifying influential nodes]]
+  G[[Identifying business transactions]]
+  H[Transforming graph for statistical analysis]
+  I[Calculate measures of centrality]
+  J[Visualizing influential nodes]
+  
+  subgraph Data Preparation
+    A -.-&gt; D
+    A -.-&gt; E
+  end
+  
+  A --&gt; B
+  D --&gt; B
+  E --&gt; C
+  A --&gt; C
+  F --&gt; H
+  
+  subgraph Data Exploration &amp; Visualization
+    B --&gt; F
+    B --&gt; G
+    C --&gt; G
+    C --&gt; F
+  end
+  
+  subgraph Statistical Analysis
+    H --&gt; I
+    I --&gt; J
+  end
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <ol type="1">
-<li><p><strong>Data Preparation:</strong> Cleaning and shaping data to what is needed for analysis. The following data will be prepared:</p>
+<li><p><strong>Data Preparation:</strong> Cleaning and shaping data to what is needed for analysis.</p>
 <ul>
-<li>Node and edge data for network data analysis. @We will only use the 4,782 connected components in plotting the network data</li>
-<li>Non-network data for accompanying information, if needed (e.g.&nbsp;how many people involved, information about companies involved in fishing business)</li>
+<li>Network and temporal data to enable getting the network state at any given time.</li>
+<li>Non-network data for accompanying information, if needed (e.g.&nbsp;products and services)</li>
+<li>Writing helper functions to generate the following subgraphs for closer analysis
+<ul>
+<li>Getting subgraph based on proximity to a given node</li>
+<li>Getting the network state, i.e.&nbsp;nodes and edges present at any given time.</li>
 </ul></li>
-<li><p><strong>Data Exploration &amp; Visualization:</strong> To identify patterns in the data and derive insights from them. We will use the following visualization methods:</p>
+</ul></li>
+<li><p><strong>Data Exploration &amp; Visualization:</strong> To identify patterns in the network and derive inferences from them.</p>
 <ul>
-<li><p>Network graphs to see relationship between entities</p></li>
-<li><p>Interactive and/or animated graphs to see how relationships change through time</p></li>
-<li><p>Shiny app for users to interact and change parameters for analysis</p></li>
+<li><p>Interactive network graphs to see relationship between entities</p></li>
+<li><p>Shiny app for users to interact and change parameters for analysis</p>
+<ul>
+<li>A time slider will be provided to easily see how the network changes through time</li>
+</ul></li>
+<li><p>By looking at various network structures, identify the following:</p>
+<ul>
+<li><p>Kinds of business transactions</p></li>
+<li><p>Influential nodes</p></li>
+</ul></li>
 </ul></li>
 <li><p><strong>Statistical Analysis:</strong> To test and evaluate or hypothesis.</p>
 <ul>
-<li><p>Network centrality inidices (e.g., betweenness centrality)</p></li>
-<li><p>Community, to identify clusters of closely-knit nodes.</p></li>
+<li><p>Transform network graph to power graph (as the provided graph may not be suitable for statistical analysis.</p></li>
+<li><p>Calculate measures of centrality to identify influential nodes</p>
+<ul>
+<li><p><strong>pagerank centrality</strong> for the nodes that hold the most power over resources in the network (the <strong>power holders</strong>).</p></li>
+<li><p><strong>betweenness centrality</strong> for the nodes the broker the power of a powerful node over the less powerful ones.</p></li>
+</ul></li>
 </ul></li>
 </ol>
+</div>
+</div>
+</div>
 </section>
 <section id="prototype-sketches" class="level1">
 <h1>Prototype Sketches</h1>
@@ -325,7 +385,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="proposal_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="proposal_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>

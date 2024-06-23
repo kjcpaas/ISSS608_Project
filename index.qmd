@@ -1,5 +1,5 @@
 ---
-title: "NetWeaver: Unraveling the Secrets of Fishing Corporate Networks"
+title: "The Big Fish: Detecting Fishing Business Anomalies Through Visual Analytics"
 ---
 
 We are students This site is our answer to [MC3](https://vast-challenge.github.io/2024/MC3.html) of the [VAST Challenge 2024](https://vast-challenge.github.io/2024/index.html).

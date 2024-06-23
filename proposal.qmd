@@ -1,16 +1,10 @@
 ---
 title: "Project Proposal"
+format:
+  html:
+    mermaid: 
+      theme: default
 ---
-
-::: {.callout-note appearance="simple"}
-Proposal based on: <https://decoding-chaos.netlify.app/team/projectproposal/projectproposal>
-
-MC3 questions:
-
-1 & 2: Fengji
-
-3 & 4: Joy
-:::
 
 # Motivation
 
@@ -32,30 +26,84 @@ This project aims to build an interactive visualization tool to enable FishEyeâ€
 
 The project will examine the data from VAST Challenge 2024 [Mini-Challenge 3](https://vast-challenge.github.io/2024/MC3.html). The data contains the network for Oceanusâ€™s commercial fishing business community. It contains 60,520 nodes, 75,817 edges, and 4,782 connected components.
 
-Each node represents the entities in the fishing business community (including people and organizations). The edges represent the relationship between each pair of connected nodes.
+Each node represents the entities in the fishing business community (including people and organizations). The edges represent the relationship or transactions between each pair of connected nodes.
 
 # Methodology
 
-The team will take the following approach:
+::: panel-tabset
+## Diagram
 
-1.  **Data Preparation:** Cleaning and shaping data to what is needed for analysis. The following data will be prepared:
+```{mermaid}
+flowchart TB
+  A[Data Wrangling]
+  B[Visualizing corporate structures]
+  C[Visualizing temporal changes]
+  D(Extracting subnetworks)
+  E(Extracting network state through time)
+  F[[Identifying influential nodes]]
+  G[[Identifying business transactions]]
+  H[Transforming graph for statistical analysis]
+  I[Calculate measures of centrality]
+  J[Visualizing influential nodes]
+  
+  subgraph Data Preparation
+    A -.-> D
+    A -.-> E
+  end
+  
+  A --> B
+  D --> B
+  E --> C
+  A --> C
+  F --> H
+  
+  subgraph Data Exploration & Visualization
+    B --> F
+    B --> G
+    C --> G
+    C --> F
+  end
+  
+  subgraph Statistical Analysis
+    H --> I
+    I --> J
+  end
+```
 
-    -   Node and edge data for network data analysis. \@We will only use the 4,782 connected components in plotting the network data
-    -   Non-network data for accompanying information, if needed (e.g. how many people involved, information about companies involved in fishing business)
+## Explanation
 
-2.  **Data Exploration & Visualization:** To identify patterns in the data and derive insights from them. We will use the following visualization methods:
+1.  **Data Preparation:** Cleaning and shaping data to what is needed for analysis.
 
-    -   Network graphs to see relationship between entities
+    -   Network and temporal data to enable getting the network state at any given time.
+    -   Non-network data for accompanying information, if needed (e.g. products and services)
+    -   Writing helper functions to generate the following subgraphs for closer analysis
+        -   Getting subgraph based on proximity to a given node
+        -   Getting the network state, i.e. nodes and edges present at any given time.
 
-    -   Interactive and/or animated graphs to see how relationships change through time
+2.  **Data Exploration & Visualization:** To identify patterns in the network and derive inferences from them.
+
+    -   Interactive network graphs to see relationship between entities
 
     -   Shiny app for users to interact and change parameters for analysis
 
+        -   A time slider will be provided to easily see how the network changes through time
+
+    -   By looking at various network structures, identify the following:
+
+        -   Kinds of business transactions
+
+        -   Influential nodes
+
 3.  **Statistical Analysis:** To test and evaluate or hypothesis.
 
-    -   Network centrality inidices (e.g., betweenness centrality)
+    -   Transform network graph to power graph (as the provided graph may not be suitable for statistical analysis.
 
-    -   Community, to identify clusters of closely-knit nodes.
+    -   Calculate measures of centrality to identify influential nodes
+
+        -   **pagerank centrality** for the nodes that hold the most power over resources in the network (the **power holders**).
+
+        -   **betweenness centrality** for the nodes the broker the power of a powerful node over the less powerful ones.
+:::
 
 # Prototype Sketches
 
