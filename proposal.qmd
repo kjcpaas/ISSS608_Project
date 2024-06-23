@@ -57,7 +57,7 @@ The team will take the following approach:
 
     -   Community, to identify clusters of closely-knit nodes.
 
-# **Prototype Sketches**
+# Prototype Sketches
 
 1.  Temporal patterns and corporate structures:
 
@@ -79,7 +79,7 @@ The team will take the following approach:
 
     Once the potentially involved companies are identified, delve into their transaction histories to uncover detailed evidence of their involvement. We can thus map out the methods and routes used for illegal fishing operations.
 
-# **R Packages**
+# R Packages
 
 -   [tidyverse](https://www.tidyverse.org/): A collection of R packages used in data science, which includes [ggplot2](https://ggplot2.tidyverse.org/), [tibble](https://tibble.tidyverse.org/), [readr](https://readr.tidyverse.org/)
 -   [vistime](https://github.com/shosaco/vistime): For visualizing timelines

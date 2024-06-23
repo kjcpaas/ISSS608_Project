@@ -108,3 +108,50 @@ If we have enough time, we will do 1 more question so that we can compare notes 
 -   Push our work on the Project Proposal to Github so that we can check each other's work.
 
 -   Fengji to take care of submission on Sunday as Kristine will be out.
+
+## Project Meeting 4
+
+**Date:** 22/06/2024
+
+**Time:** 9:00 - 9:30 PM
+
+**In Attendance:** Kristine Joy Paas, Tan Fengji
+
+### Agenda Items
+
+1.  Project Check-in
+2.  Task Prioritization
+
+### Agenda Item 1: Project Check-in
+
+-   We have only been communicating by Teams in the last month as we focused on Take-Home Exam 3.
+
+-   After that, we independently studied how to convert our Take Home Exam 3 outputs to Shiny App.
+
+    -   We had more pressing deadlines in other modules so we agreed to prioritize those first.
+
+### Agenda Item 2: Task Prioritization
+
+-   The items we still need to do for the project are:
+
+    -   Project Site
+
+        -   Add prototype sketches
+
+        -   Add details on methodology
+
+        -   Polish content
+
+    -   Poster
+
+    -   Shiny App
+
+        -   Combine our work
+
+-   We decided to prioritize combining our Shiny Apps as we need the screenshots for the poster.
+
+    -   Same with the Project Site, we will use Joy's Github to collaborate on the Shiny App
+
+    -   Submitting the poster on Wednesday, **June 26** is the highest priority
+
+    -   Meet again on June 25 evening to finalize the poster.
