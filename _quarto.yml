@@ -5,17 +5,33 @@ website:
   title: "NetWeaver"
   navbar:
     left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
-    right: 
       - href: proposal.qmd
-        text: Project Proposal
+        text: Proposal [WIP]
+      - href: poster.qmd
+        text: Poster [TODO]
       - href: meeting_minutes.qmd
         text: Meeting Minutes
+      - about.qmd
+    right:
+      - text: Shiny App
+        menu:
+        - href: user_guide.qmd
+          text: User Guide [TODO]
+        - href: "https://kjcpaas.shinyapps.io/isss608-202324g4/"
+          text: Shiny App
+          target: _blank
+      - icon: github
+        text: Github
+        menu: 
+        - href: "https://github.com/kjcpaas/ISSS608_Project"
+          text: Project Site
+          target: _blank
+        - href: "https://github.com/kjcpaas/ISSS608_Project_Shiny"
+          text: Shiny App
+          target: _blank
 format:
   html:
-    theme: cosmo
+    theme: zephyr
     css: styles.css
     toc: true
 

@@ -1,9 +1,9 @@
 ---
-title: "About"
+title: "The Team"
 ---
 
-About this site
+This project was developed for **ISSS608** (Visual Analytics and Applications) during Term 3 of the Academic Year 2023-24 in [Singapore Management University](https://www.smu.edu.sg/){target="_blank"} by:
 
-```{r}
-1 + 1
-```
+-   [Kristine Joy Paas](https://isss608-kjcpaas.netlify.app/){target="_blank"}
+
+-   [Tan Fengji](https://main--spectacular-buttercream-d0f389.netlify.app/about.html){target="_blank"}

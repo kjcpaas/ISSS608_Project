@@ -1,0 +1,7 @@
+---
+title: "User Guide"
+---
+
+![](img/shiny_logo.png){fig-align="center" width="73"}
+
+Our Shiny app is hosted at [ShinyApps](https://kjcpaas.shinyapps.io/isss608-202324g4/). This guide helps you understand how to use the application.
