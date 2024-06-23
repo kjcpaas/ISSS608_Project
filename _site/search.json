@@ -44,9 +44,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "The Big Fish: Detecting Fishing Business Anomalies Through Visual Analytics",
+    "title": "The Big Fish: Catching Illegal Fishers Using Visual Analytics",
     "section": "",
-    "text": "We are students This site is our answer to MC3 of the VAST Challenge 2024.\nMembers:\n\nKristine Joy Paas\nTan Fengji"
+    "text": "141B4D\nAs part of VAST Challenge 2024, we will investigate the fishing business network of Oceanus. A network of businesses have recently been caught illegal fishing. FishEye, a non-profit organization collects various data about illegal fishing and our tasks is to develop data visualizations from data provided.\n\n\n\n\n\nWe will focus on Mini-challenge 3, which looks at the network data to investigate changes in corporate structures within the fishing business community. We will also look at the influence of different entities in the network to identify the entities that benefit from illegal fishing activities. Can we catch the big fish?"
   },
   {
     "objectID": "poster.html",

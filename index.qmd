@@ -1,11 +1,13 @@
 ---
-title: "The Big Fish: Detecting Fishing Business Anomalies Through Visual Analytics"
+title: "The Big Fish: Catching Illegal Fishers Using Visual Analytics"
 ---
 
-We are students This site is our answer to [MC3](https://vast-challenge.github.io/2024/MC3.html) of the [VAST Challenge 2024](https://vast-challenge.github.io/2024/index.html).
+![](images/bigfish_hero.png){fig-align="center" width="438"}
 
-Members:
+**141B4D**
 
--   [Kristine Joy Paas](https://isss608-kjcpaas.netlify.app/)
+As part of [VAST Challenge 2024](https://vast-challenge.github.io/2024/index.html), we will investigate the fishing business network of Oceanus. A network of businesses have recently been caught illegal fishing. FishEye, a non-profit organization collects various data about illegal fishing and our tasks is to develop data visualizations from data provided.
 
--   [Tan Fengji](https://main--spectacular-buttercream-d0f389.netlify.app/about.html)
+![](images/clipboard-2290439467.png){fig-align="center" width="176"}
+
+We will focus on [Mini-challenge 3](https://vast-challenge.github.io/2024/MC3.html), which looks at the network data to investigate changes in corporate structures within the fishing business community. We will also look at the influence of different entities in the network to identify the entities that benefit from illegal fishing activities. Can we catch the big fish?
