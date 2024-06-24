@@ -46,7 +46,126 @@
     "href": "index.html",
     "title": "The Big Fish: Catching Illegal Fishers Using Visual Analytics",
     "section": "",
-    "text": "141B4D\nAs part of VAST Challenge 2024, we will investigate the fishing business network of Oceanus. A network of businesses have recently been caught illegal fishing. FishEye, a non-profit organization collects various data about illegal fishing and our tasks is to develop data visualizations from data provided.\n\n\n\n\n\nWe will focus on Mini-challenge 3, which looks at the network data to investigate changes in corporate structures within the fishing business community. We will also look at the influence of different entities in the network to identify the entities that benefit from illegal fishing activities. Can we catch the big fish?"
+    "text": "As part of VAST Challenge 2024, we will investigate the fishing business network of Oceanus. A network of businesses have recently been caught illegal fishing. FishEye, a non-profit organization collects various data about illegal fishing and our tasks is to develop data visualizations from data provided.\n\n\n\n\n\nWe will focus on Mini-challenge 3, which looks at the network data to investigate changes in corporate structures within the fishing business community. We will also look at the influence of different entities in the network to identify the entities that benefit from illegal fishing activities. Can we catch the big fish?"
+  },
+  {
+    "objectID": "methodology/data_preparation.html",
+    "href": "methodology/data_preparation.html",
+    "title": "Data Preparation",
+    "section": "",
+    "text": "This document will go through how we prepare the data that will be used for the Shiny application."
+  },
+  {
+    "objectID": "methodology/data_preparation.html#loading-packages",
+    "href": "methodology/data_preparation.html#loading-packages",
+    "title": "Data Preparation",
+    "section": "1.1 Loading Packages",
+    "text": "1.1 Loading Packages\nWe will use the following packages to prepare the data.\n\njsonlite - To parse JSON\nknitr - For better table displays\ntidyverse - Data science tools\ntidygraph - For graph manipulations\nigraph - Contains functions for network analysis\n\n\npacman::p_load(jsonlite, knitr, tidyverse, tidygraph, igraph)"
+  },
+  {
+    "objectID": "methodology/data_preparation.html#loading-data",
+    "href": "methodology/data_preparation.html#loading-data",
+    "title": "Data Preparation",
+    "section": "1.2 Loading Data",
+    "text": "1.2 Loading Data\nWe will load the provided VAST Mini-Challenge 3 dataset, a json file.\n\nmc3_data &lt;- fromJSON(\"data/mc3.json\")\nglimpse(mc3_data)\n\nList of 5\n $ directed  : logi TRUE\n $ multigraph: logi TRUE\n $ graph     : Named list()\n $ nodes     :'data.frame': 60520 obs. of  15 variables:\n  ..$ type             : chr [1:60520] \"Entity.Organization.Company\" \"Entity.Organization.Company\" \"Entity.Organization.Company\" \"Entity.Organization.Company\" ...\n  ..$ country          : chr [1:60520] \"Uziland\" \"Mawalara\" \"Uzifrica\" \"Islavaragon\" ...\n  ..$ ProductServices  : chr [1:60520] \"Unknown\" \"Furniture and home accessories\" \"Food products\" \"Unknown\" ...\n  ..$ PointOfContact   : chr [1:60520] \"Rebecca Lewis\" \"Michael Lopez\" \"Steven Robertson\" \"Anthony Wyatt\" ...\n  ..$ HeadOfOrg        : chr [1:60520] \"Émilie-Susan Benoit\" \"Honoré Lemoine\" \"Jules Labbé\" \"Dr. Víctor Hurtado\" ...\n  ..$ founding_date    : chr [1:60520] \"1954-04-24T00:00:00\" \"2009-06-12T00:00:00\" \"2029-12-15T00:00:00\" \"1972-02-16T00:00:00\" ...\n  ..$ revenue          : num [1:60520] 5995 71767 0 0 4747 ...\n  ..$ TradeDescription : chr [1:60520] \"Unknown\" \"Abbott-Gomez is a leading manufacturer and supplier of high-quality furniture and home accessories, catering to\"| __truncated__ \"Abbott-Harrison is a leading manufacturer of high-quality food products, including baked goods, snacks, and bev\"| __truncated__ \"Unknown\" ...\n  ..$ _last_edited_by  : chr [1:60520] \"Pelagia Alethea Mordoch\" \"Pelagia Alethea Mordoch\" \"Pelagia Alethea Mordoch\" \"Pelagia Alethea Mordoch\" ...\n  ..$ _last_edited_date: chr [1:60520] \"2035-01-01T00:00:00\" \"2035-01-01T00:00:00\" \"2035-01-01T00:00:00\" \"2035-01-01T00:00:00\" ...\n  ..$ _date_added      : chr [1:60520] \"2035-01-01T00:00:00\" \"2035-01-01T00:00:00\" \"2035-01-01T00:00:00\" \"2035-01-01T00:00:00\" ...\n  ..$ _raw_source      : chr [1:60520] \"Existing Corporate Structure Data\" \"Existing Corporate Structure Data\" \"Existing Corporate Structure Data\" \"Existing Corporate Structure Data\" ...\n  ..$ _algorithm       : chr [1:60520] \"Automatic Import\" \"Automatic Import\" \"Automatic Import\" \"Automatic Import\" ...\n  ..$ id               : chr [1:60520] \"Abbott, Mcbride and Edwards\" \"Abbott-Gomez\" \"Abbott-Harrison\" \"Abbott-Ibarra\" ...\n  ..$ dob              : chr [1:60520] NA NA NA NA ...\n $ links     :'data.frame': 75817 obs. of  11 variables:\n  ..$ start_date       : chr [1:75817] \"2016-10-29T00:00:00\" \"2035-06-03T00:00:00\" \"2028-11-20T00:00:00\" \"2024-09-04T00:00:00\" ...\n  ..$ type             : chr [1:75817] \"Event.Owns.Shareholdership\" \"Event.Owns.Shareholdership\" \"Event.Owns.Shareholdership\" \"Event.Owns.Shareholdership\" ...\n  ..$ _last_edited_by  : chr [1:75817] \"Pelagia Alethea Mordoch\" \"Niklaus Oberon\" \"Pelagia Alethea Mordoch\" \"Pelagia Alethea Mordoch\" ...\n  ..$ _last_edited_date: chr [1:75817] \"2035-01-01T00:00:00\" \"2035-07-15T00:00:00\" \"2035-01-01T00:00:00\" \"2035-01-01T00:00:00\" ...\n  ..$ _date_added      : chr [1:75817] \"2035-01-01T00:00:00\" \"2035-07-15T00:00:00\" \"2035-01-01T00:00:00\" \"2035-01-01T00:00:00\" ...\n  ..$ _raw_source      : chr [1:75817] \"Existing Corporate Structure Data\" \"Oceanus Corporations Monthly - Jun '35\" \"Existing Corporate Structure Data\" \"Existing Corporate Structure Data\" ...\n  ..$ _algorithm       : chr [1:75817] \"Automatic Import\" \"Manual Entry\" \"Automatic Import\" \"Automatic Import\" ...\n  ..$ source           : chr [1:75817] \"Avery Inc\" \"Berger-Hayes\" \"Bowers Group\" \"Bowman-Howe\" ...\n  ..$ target           : chr [1:75817] \"Allen, Nichols and Thompson\" \"Jensen, Morris and Downs\" \"Barnett Inc\" \"Bennett Ltd\" ...\n  ..$ key              : int [1:75817] 0 0 0 0 0 0 0 0 0 0 ...\n  ..$ end_date         : chr [1:75817] NA NA NA NA ...\n\n\nThere are 60,520 nodes and 75,817 edges in the data."
+  },
+  {
+    "objectID": "methodology/data_preparation.html#extracting-nodes-and-edges",
+    "href": "methodology/data_preparation.html#extracting-nodes-and-edges",
+    "title": "Data Preparation",
+    "section": "2.1 Extracting nodes and edges",
+    "text": "2.1 Extracting nodes and edges\nWe will first extract the nodes and edges.\n\nNodesEdges\n\n\n\nmc3_nodes_raw &lt;- as_tibble(mc3_data$nodes)\nglimpse(mc3_nodes_raw)\n\nRows: 60,520\nColumns: 15\n$ type                &lt;chr&gt; \"Entity.Organization.Company\", \"Entity.Organizatio…\n$ country             &lt;chr&gt; \"Uziland\", \"Mawalara\", \"Uzifrica\", \"Islavaragon\", …\n$ ProductServices     &lt;chr&gt; \"Unknown\", \"Furniture and home accessories\", \"Food…\n$ PointOfContact      &lt;chr&gt; \"Rebecca Lewis\", \"Michael Lopez\", \"Steven Robertso…\n$ HeadOfOrg           &lt;chr&gt; \"Émilie-Susan Benoit\", \"Honoré Lemoine\", \"Jules La…\n$ founding_date       &lt;chr&gt; \"1954-04-24T00:00:00\", \"2009-06-12T00:00:00\", \"202…\n$ revenue             &lt;dbl&gt; 5994.73, 71766.67, 0.00, 0.00, 4746.67, 46566.67, …\n$ TradeDescription    &lt;chr&gt; \"Unknown\", \"Abbott-Gomez is a leading manufacturer…\n$ `_last_edited_by`   &lt;chr&gt; \"Pelagia Alethea Mordoch\", \"Pelagia Alethea Mordoc…\n$ `_last_edited_date` &lt;chr&gt; \"2035-01-01T00:00:00\", \"2035-01-01T00:00:00\", \"203…\n$ `_date_added`       &lt;chr&gt; \"2035-01-01T00:00:00\", \"2035-01-01T00:00:00\", \"203…\n$ `_raw_source`       &lt;chr&gt; \"Existing Corporate Structure Data\", \"Existing Cor…\n$ `_algorithm`        &lt;chr&gt; \"Automatic Import\", \"Automatic Import\", \"Automatic…\n$ id                  &lt;chr&gt; \"Abbott, Mcbride and Edwards\", \"Abbott-Gomez\", \"Ab…\n$ dob                 &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n\n\nWe will only retain the following columns:\n\nid: to serve as the identifier for the node\ntype: to differentiate people from companies in the graph.\nProductServices: to identify the products of services a business offer\n\n\nmc3_nodes_lite &lt;- mc3_nodes_raw %&gt;%\n  select(id, type, ProductServices) %&gt;%\n  rename(product_services = ProductServices)\n\n\n\n\nmc3_edges_raw &lt;- as_tibble(mc3_data$links)\nglimpse(mc3_edges_raw)\n\nRows: 75,817\nColumns: 11\n$ start_date          &lt;chr&gt; \"2016-10-29T00:00:00\", \"2035-06-03T00:00:00\", \"202…\n$ type                &lt;chr&gt; \"Event.Owns.Shareholdership\", \"Event.Owns.Sharehol…\n$ `_last_edited_by`   &lt;chr&gt; \"Pelagia Alethea Mordoch\", \"Niklaus Oberon\", \"Pela…\n$ `_last_edited_date` &lt;chr&gt; \"2035-01-01T00:00:00\", \"2035-07-15T00:00:00\", \"203…\n$ `_date_added`       &lt;chr&gt; \"2035-01-01T00:00:00\", \"2035-07-15T00:00:00\", \"203…\n$ `_raw_source`       &lt;chr&gt; \"Existing Corporate Structure Data\", \"Oceanus Corp…\n$ `_algorithm`        &lt;chr&gt; \"Automatic Import\", \"Manual Entry\", \"Automatic Imp…\n$ source              &lt;chr&gt; \"Avery Inc\", \"Berger-Hayes\", \"Bowers Group\", \"Bowm…\n$ target              &lt;chr&gt; \"Allen, Nichols and Thompson\", \"Jensen, Morris and…\n$ key                 &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…\n$ end_date            &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n\n\nWe will only retain the following columns:\n\nsource: to identify the actor of the relationship, corresponds to id in nodes.\ntarget: to identify the receiver of the relationship, corresponds to id in nodes.\ntype: to identify the type of the relationship\nstart_date: to identify when the relationship started\nend_date: to identify when the relationship ended\n\n\nmc3_edges_lite &lt;- mc3_edges_raw %&gt;% select(source, target, type, start_date, end_date)"
+  },
+  {
+    "objectID": "methodology/data_preparation.html#deeper-look-at-type",
+    "href": "methodology/data_preparation.html#deeper-look-at-type",
+    "title": "Data Preparation",
+    "section": "2.2 Deeper look at type",
+    "text": "2.2 Deeper look at type\nBoth the nodes and edges have type which contains the type of the nodes and edges. We will assign a supertype and a subtype from type.\n\nNodesEdges\n\n\n\nmc3_nodes_lite %&gt;%\n  group_by(type) %&gt;%\n  summarize(count = n()) %&gt;%\n  arrange(-count) %&gt;%\n  kable()\n\n\n\n\ntype\ncount\n\n\n\n\nEntity.Person\n50356\n\n\nEntity.Organization.Company\n7927\n\n\nEntity.Person.CEO\n1293\n\n\nEntity.Organization.FishingCompany\n600\n\n\nEntity.Organization.LogisticsCompany\n311\n\n\nEntity.Organization.FinancialCompany\n23\n\n\nEntity.Organization.NGO\n5\n\n\nEntity.Organization.NewsCompany\n5\n\n\n\n\n\nsupertype - type of entity, either Person or Organization\nsubtype - subcategory of supertype, e.g., Company, FishingCompany, CEO\n\n\n\nmc3_edges_lite %&gt;%\n  group_by(type) %&gt;%\n  summarize(count = n()) %&gt;%\n  arrange(-count) %&gt;%\n  kable()\n\n\n\n\ntype\ncount\n\n\n\n\nEvent.Owns.Shareholdership\n39378\n\n\nEvent.Owns.BeneficialOwnership\n21531\n\n\nEvent.WorksFor\n14817\n\n\nRelationship.FamilyRelationship\n91\n\n\n\n\n\nsupertype - type of relationship, either Ownership, Employment, Relationship.\nsubtype - subcategory of supertype, e.g., Shareholdership, BeneficialOwnership, FamilyRelationship"
+  },
+  {
+    "objectID": "methodology/data_preparation.html#dates",
+    "href": "methodology/data_preparation.html#dates",
+    "title": "Data Preparation",
+    "section": "2.3 Dates",
+    "text": "2.3 Dates\nConsider the date fields, e.g. start_date.\n\nmc3_edges_lite %&gt;% select(start_date) %&gt;% glimpse()\n\nRows: 75,817\nColumns: 1\n$ start_date &lt;chr&gt; \"2016-10-29T00:00:00\", \"2035-06-03T00:00:00\", \"2028-11-20T0…\n\n\nIt is using the ISO 8601 format that includes the time component. We are only interested in the date component so we will just get the first 10 characters.\n\nsubstr(\"2016-10-29T00:00:00\", 1, 10)\n\n[1] \"2016-10-29\""
+  },
+  {
+    "objectID": "methodology/data_preparation.html#node-aliases",
+    "href": "methodology/data_preparation.html#node-aliases",
+    "title": "Data Preparation",
+    "section": "2.4 Node Aliases",
+    "text": "2.4 Node Aliases\nAs the nodes have long names, using them as labels in the visualization is not the best way as the text will cover important information.\nWe will generate them from the first character of each word. We will define a function to provide this capability.\n\nto_initials &lt;- function(name) {\n  strsplit(name, \"[^A-Za-z0-9']+\")[[1]] %&gt;%  # Split when non-alphanumeric\n    substr(1, 1) %&gt;% # Get first letter\n    paste0(collapse = \"\") %&gt;%\n    substr(1, 4) # Get first 4 letters only as some names are still too long\n}\n\n\nto_initials(\"SouthSeafood Express Corp\")\n\n[1] \"SEC\""
+  },
+  {
+    "objectID": "methodology/data_preparation.html#other-considerations",
+    "href": "methodology/data_preparation.html#other-considerations",
+    "title": "Data Preparation",
+    "section": "2.5 Other considerations",
+    "text": "2.5 Other considerations\n\nFilteringGraph attributes\n\n\nWe will add an included column to the nodes and edges for filtering purposes so that we can show or hide them depending on the filtering criteria.\nThis is particularly useful in network visualization.\n\n\nWe must also rename the columns for compatibility with igraph and tidygraph.\nFor edges, we will rename source and target to from and to respectively.\nFor nodes, we will rename id to name."
+  },
+  {
+    "objectID": "methodology/data_preparation.html#shaping-the-data",
+    "href": "methodology/data_preparation.html#shaping-the-data",
+    "title": "Data Preparation",
+    "section": "3.1 Shaping the data",
+    "text": "3.1 Shaping the data\nWe will now prepare the nodes according to the above considerations.\n\nmc3_nodes_clean &lt;- mc3_nodes_lite %&gt;%\n  rename(name = id) %&gt;%\n  mutate(\n    alias = sapply(name, to_initials),\n    supertype = strsplit(type, \".\", fixed=TRUE) %&gt;% sapply('[', 2),\n    # Get the last type as subtype. In the case of Entity.Person,\n    # both supertype and subtype are \"Person\".\n    subtype = strsplit(type, \".\", fixed=TRUE) %&gt;% sapply(tail, n=1),\n    included = 1\n  ) %&gt;% select(name, alias, supertype, subtype, product_services, included)"
+  },
+  {
+    "objectID": "methodology/data_preparation.html#checking-the-type-fields",
+    "href": "methodology/data_preparation.html#checking-the-type-fields",
+    "title": "Data Preparation",
+    "section": "3.2 Checking the type fields",
+    "text": "3.2 Checking the type fields\nLet’s confirm if the types have been mapped correctly to the corresponding supertype and subtype.\n\nmc3_nodes_clean %&gt;%\n  group_by(supertype, subtype) %&gt;%\n  summarize(count = n()) %&gt;%\n  arrange(-count) %&gt;%\n  kable()\n\n`summarise()` has grouped output by 'supertype'. You can override using the\n`.groups` argument.\n\n\n\n\n\nsupertype\nsubtype\ncount\n\n\n\n\nPerson\nPerson\n50356\n\n\nOrganization\nCompany\n7927\n\n\nPerson\nCEO\n1293\n\n\nOrganization\nFishingCompany\n600\n\n\nOrganization\nLogisticsCompany\n311\n\n\nOrganization\nFinancialCompany\n23\n\n\nOrganization\nNGO\n5\n\n\nOrganization\nNewsCompany\n5"
+  },
+  {
+    "objectID": "methodology/data_preparation.html#checking-the-rest-of-the-data",
+    "href": "methodology/data_preparation.html#checking-the-rest-of-the-data",
+    "title": "Data Preparation",
+    "section": "3.3 Checking the rest of the data",
+    "text": "3.3 Checking the rest of the data\nLet’s also inspect the rest of the data if they are in the form we need.\n\nmc3_nodes_clean %&gt;% head() %&gt;% kable()\n\n\n\n\n\n\n\n\n\n\n\n\nname\nalias\nsupertype\nsubtype\nproduct_services\nincluded\n\n\n\n\nAbbott, Mcbride and Edwards\nAMaE\nOrganization\nCompany\nUnknown\n1\n\n\nAbbott-Gomez\nAG\nOrganization\nCompany\nFurniture and home accessories\n1\n\n\nAbbott-Harrison\nAH\nOrganization\nCompany\nFood products\n1\n\n\nAbbott-Ibarra\nAI\nOrganization\nCompany\nUnknown\n1\n\n\nAbbott-Sullivan\nAS\nOrganization\nCompany\nUnknown\n1\n\n\nAcevedo and Sons\nAaS\nOrganization\nCompany\nFish, crustaceans and molluscs\n1\n\n\n\n\n\nThe alias was successfully generated based on the node name. The dataframe also has all the columns we need."
+  },
+  {
+    "objectID": "methodology/data_preparation.html#shaping-the-data-1",
+    "href": "methodology/data_preparation.html#shaping-the-data-1",
+    "title": "Data Preparation",
+    "section": "4.1 Shaping the data",
+    "text": "4.1 Shaping the data\nWith the previous considerations, we will shape the edge data.\n\nmc3_edges_clean &lt;- mc3_edges_lite %&gt;%\n  rename(from = source, to = target, ) %&gt;%\n  mutate(\n    supertype = ifelse(\n      grepl(\"Event.Owns\", type),\n      \"Ownership\",\n      ifelse(grepl(\"Relationship\", type), \"Relationship\", \"Employment\")\n    ),\n    subtype = strsplit(type, \".\", fixed = TRUE) %&gt;% sapply(tail, n = 1),\n    # Convert date strings to datetime\n    start_date = substr(start_date, 1, 10) %&gt;% as_date(),\n    end_date = substr(end_date, 1, 10) %&gt;% as_date()\n  ) %&gt;%\n  filter(from != to) %&gt;%\n  group_by(from, to, supertype, subtype, start_date, end_date) %&gt;%\n  summarize(weight = n())\n\n`summarise()` has grouped output by 'from', 'to', 'supertype', 'subtype',\n'start_date'. You can override using the `.groups` argument."
+  },
+  {
+    "objectID": "methodology/data_preparation.html#checking-the-type-fields-1",
+    "href": "methodology/data_preparation.html#checking-the-type-fields-1",
+    "title": "Data Preparation",
+    "section": "4.2 Checking the type fields",
+    "text": "4.2 Checking the type fields\nLet’s confirm if the types have been mapped correctly to the corresponding supertype and subtype.\n\nmc3_edges_clean %&gt;%\n  group_by(supertype, subtype) %&gt;%\n  summarize(count = n()) %&gt;%\n  arrange(-count) %&gt;%\n  kable()\n\n`summarise()` has grouped output by 'supertype'. You can override using the\n`.groups` argument.\n\n\n\n\n\nsupertype\nsubtype\ncount\n\n\n\n\nOwnership\nShareholdership\n39378\n\n\nOwnership\nBeneficialOwnership\n21529\n\n\nEmployment\nWorksFor\n14817\n\n\nRelationship\nFamilyRelationship\n91"
+  },
+  {
+    "objectID": "methodology/data_preparation.html#checking-the-rest-of-the-data-1",
+    "href": "methodology/data_preparation.html#checking-the-rest-of-the-data-1",
+    "title": "Data Preparation",
+    "section": "4.3 Checking the rest of the data",
+    "text": "4.3 Checking the rest of the data\nLet’s also inspect the rest of the data if they are in the form we need.\n\nmc3_edges_clean %&gt;% head() %&gt;% kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\nfrom\nto\nsupertype\nsubtype\nstart_date\nend_date\nweight\n\n\n\n\n4. SeaCargo Ges.m.b.H.\nDry CreekRybachit Marine A/S\nOwnership\nShareholdership\n2034-12-31\nNA\n1\n\n\n4. SeaCargo Ges.m.b.H.\nKambalaSea Freight Inc\nOwnership\nShareholdership\n2033-04-12\nNA\n1\n\n\n9. RiverLine CJSC\nSumacAmerica Transport GmbH & Co. KG\nOwnership\nShareholdership\n2028-12-02\nNA\n1\n\n\nAaron Acosta\nManning-Pratt\nEmployment\nWorksFor\n2008-07-30\nNA\n1\n\n\nAaron Acosta\nManning-Pratt\nOwnership\nShareholdership\n2008-09-14\nNA\n1\n\n\nAaron Allen\nHicks-Calderon\nOwnership\nBeneficialOwnership\n2025-03-06\nNA\n1\n\n\n\n\n\nThe dates columns only have the date components, not the time. The dataframe also has all the columns we need."
+  },
+  {
+    "objectID": "methodology/data_preparation.html#supernetwork",
+    "href": "methodology/data_preparation.html#supernetwork",
+    "title": "Data Preparation",
+    "section": "5.1 Supernetwork",
+    "text": "5.1 Supernetwork\nWe will generate supernetwork containing all the nodes and edges we prepared.\n\nsupernetwork = tbl_graph(\n  edges = mc3_edges_clean,\n  nodes = mc3_nodes_clean,\n  directed = TRUE\n)\n\nWe will save this as an RDS file for use in the Shiny app.\n\nwrite_rds(supernetwork, \"data/rds/supernetwork.rds\")"
+  },
+  {
+    "objectID": "methodology/data_preparation.html#filter-by-subnetwork",
+    "href": "methodology/data_preparation.html#filter-by-subnetwork",
+    "title": "Data Preparation",
+    "section": "5.2 Filter by subnetwork",
+    "text": "5.2 Filter by subnetwork\nThe supernetwork is very large and not suitable for visualization as it requires a lot of computing resources to visualize.\nHence, we will create a function that will enable us to focus on the network of a given node. We will define a function extract_subnetwork for this.\n\nextract_subnetwork &lt;- function(graph, node_name, distance=-1) {\n  # negative distance will show full graph\n  node &lt;- which(V(graph)$name == node_name)\n  \n  if(length(node) == 0) {\n    # Return empty graph\n    return(tbl_graph())\n  }\n  \n  distance &lt;- ifelse(distance &lt; 0, length(graph), distance)\n  vertices &lt;- ego(graph, nodes = node, order = distance)[[1]]\n  igraph_subgraph &lt;- induced_subgraph(graph, vids = vertices)\n  nodes_df &lt;- as_data_frame(igraph_subgraph, what = \"vertices\")\n  edges_sf &lt;- as_data_frame(igraph_subgraph, what = \"edges\")\n  tbl_graph(nodes=nodes_df, edges=edges_sf, directed=is_directed(graph))\n}\n\n\n\n\n\n\n\nAbout the function\n\n\n\nThis function generates a subnetwork from a graph based on the nodes in proximity to reference node.\nThe size of the network can be controlled by the distance of the other nodes from the reference node. If the distance is negative, it will include all nodes connected in any way to the reference node.\nIt uses ego from igraph to figure out which nodes are connected within a given distance from a node."
+  },
+  {
+    "objectID": "methodology/data_preparation.html#filter-by-date",
+    "href": "methodology/data_preparation.html#filter-by-date",
+    "title": "Data Preparation",
+    "section": "5.3 Filter by date",
+    "text": "5.3 Filter by date\nNext, to enable inspecting temporal patterns, we will filter the edges and nodes based on their existence on the given date.\nWe will define extract_network_snapshot to enable this filtering.\n\nextract_network_snapshot &lt;- function(graph, datestring, delete = FALSE) {\n  date &lt;- as_date(datestring)\n  \n  graph_nodes = as_data_frame(graph, what = \"vertices\")\n  graph_edges = as_data_frame(graph, what = \"edges\")\n  \n  if(is.na(date) || vcount(graph) == 0) {\n    return(graph)\n  }\n  \n  # Assume transition is at 12 AM of given date\n  graph_edges &lt;- graph_edges %&gt;%\n    mutate(\n      included = ifelse(is.na(start_date) | (\n        start_date &lt;= date &\n          (is.na(end_date) |\n             end_date &gt; date)\n      ), 1, 0)\n    )\n  \n  filtered_edges &lt;- graph_edges %&gt;% filter(included == 1)\n    \n  graph_nodes &lt;- graph_nodes %&gt;%\n    mutate(included = (\n      name %in% filtered_edges$from | name %in% filtered_edges$to\n    ))\n  \n  if(!delete) {\n    return(\n      tbl_graph(nodes = graph_nodes,\n                edges = graph_edges,\n                directed = is_directed(graph))\n    )\n  }\n  \n  tbl_graph(nodes = graph_nodes %&gt;% filter(included == 1),\n            edges = filtered_edges,\n            directed = is_directed(graph))\n}\n\n\n\n\n\n\n\nAbout the function\n\n\n\nThis function sets included to true if the edge is active during the given date. For the nodes, they are considered active if they are connected to at least one other node at that point in time.\nThere is also an option to delete the inactive elements altogether, which is useful to calculate measures of centrality on the network structure at that point in time."
   },
   {
     "objectID": "poster.html",

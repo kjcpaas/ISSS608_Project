@@ -4,8 +4,6 @@ title: "The Big Fish: Catching Illegal Fishers Using Visual Analytics"
 
 ![](images/bigfish_hero.png){fig-align="center" width="438"}
 
-**141B4D**
-
 As part of [VAST Challenge 2024](https://vast-challenge.github.io/2024/index.html), we will investigate the fishing business network of Oceanus. A network of businesses have recently been caught illegal fishing. FishEye, a non-profit organization collects various data about illegal fishing and our tasks is to develop data visualizations from data provided.
 
 ![](images/clipboard-2290439467.png){fig-align="center" width="176"}

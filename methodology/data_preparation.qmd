@@ -1,3 +1,366 @@
 ---
 title: "Data Preparation"
 ---
+
+This document will go through how we prepare the data that will be used for the Shiny application.
+
+# 1 Setup
+
+## 1.1 Loading Packages
+
+We will use the following packages to prepare the data.
+
+-   [jsonlite](https://cran.r-project.org/web/packages/jsonlite/index.html) - To parse JSON
+
+-   [knitr](https://cran.r-project.org/web/packages/knitr/index.html) - For better table displays
+
+-   [tidyverse](https://www.tidyverse.org/) - Data science tools
+
+-   [tidygraph](https://cran.r-project.org/web/packages/tidygraph/index.html) - For graph manipulations
+
+-   [igraph](https://cran.r-project.org/web/packages/igraph/index.html) - Contains functions for network analysis
+
+```{r}
+pacman::p_load(jsonlite, knitr, tidyverse, tidygraph, igraph)
+```
+
+## 1.2 Loading Data
+
+We will load the provided [VAST Mini-Challenge 3](https://vast-challenge.github.io/2024/MC3.html) dataset, a json file.
+
+```{r}
+mc3_data <- fromJSON("data/mc3.json")
+glimpse(mc3_data)
+```
+
+There are **60,520 nodes** and **75,817 edges** in the data.
+
+# 2 Graph Elements
+
+## 2.1 Extracting nodes and edges
+
+We will first extract the nodes and edges.
+
+::: panel-tabset
+### Nodes
+
+```{r}
+mc3_nodes_raw <- as_tibble(mc3_data$nodes)
+glimpse(mc3_nodes_raw)
+```
+
+We will only retain the following columns:
+
+-   **id**: to serve as the identifier for the node
+-   **type**: to differentiate people from companies in the graph.
+-   **ProductServices**: to identify the products of services a business offer
+
+```{r}
+mc3_nodes_lite <- mc3_nodes_raw %>%
+  select(id, type, ProductServices) %>%
+  rename(product_services = ProductServices)
+```
+
+### Edges
+
+```{r}
+mc3_edges_raw <- as_tibble(mc3_data$links)
+glimpse(mc3_edges_raw)
+```
+
+We will only retain the following columns:
+
+-   **source**: to identify the actor of the relationship, corresponds to id in nodes.
+-   **target**: to identify the receiver of the relationship, corresponds to id in nodes.
+-   **type**: to identify the type of the relationship
+-   **start_date**: to identify when the relationship started
+-   **end_date**: to identify when the relationship ended
+
+```{r}
+mc3_edges_lite <- mc3_edges_raw %>% select(source, target, type, start_date, end_date)
+```
+:::
+
+## 2.2 Deeper look at *type*
+
+Both the `nodes` and `edges` have `type` which contains the type of the nodes and edges. We will assign a `supertype` and a `subtype` from `type`.
+
+::: panel-tabset
+### Nodes
+
+```{r}
+mc3_nodes_lite %>%
+  group_by(type) %>%
+  summarize(count = n()) %>%
+  arrange(-count) %>%
+  kable()
+```
+
+`supertype` - type of entity, either *Person* or *Organization*
+
+`subtype` - subcategory of *supertype*, e.g., *Company, FishingCompany, CEO*
+
+### Edges
+
+```{r}
+mc3_edges_lite %>%
+  group_by(type) %>%
+  summarize(count = n()) %>%
+  arrange(-count) %>%
+  kable()
+```
+
+`supertype` - type of relationship, either *Ownership*, *Employment, Relationship.*
+
+`subtype` - subcategory of *supertype*, e.g., *Shareholdership, BeneficialOwnership, FamilyRelationship*
+:::
+
+## 2.3 Dates
+
+Consider the date fields, e.g. `start_date`.
+
+```{r}
+mc3_edges_lite %>% select(start_date) %>% glimpse()
+```
+
+It is using the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format that includes the time component. We are only interested in the date component so we will just get the **first 10 characters**.
+
+```{r}
+substr("2016-10-29T00:00:00", 1, 10)
+```
+
+## 2.4 Node Aliases
+
+As the nodes have long names, using them as labels in the visualization is not the best way as the text will cover important information.
+
+We will generate them from the first character of each word. We will define a function to provide this capability.
+
+```{r}
+to_initials <- function(name) {
+  strsplit(name, "[^A-Za-z0-9']+")[[1]] %>%  # Split when non-alphanumeric
+    substr(1, 1) %>% # Get first letter
+    paste0(collapse = "") %>%
+    substr(1, 4) # Get first 4 letters only as some names are still too long
+}
+```
+
+```{r}
+to_initials("SouthSeafood Express Corp")
+```
+
+## 2.5 Other considerations
+
+::: panel-tabset
+### Filtering
+
+We will add an **included** column to the nodes and edges for filtering purposes so that we can show or hide them depending on the filtering criteria.
+
+This is particularly useful in network visualization.
+
+### Graph attributes
+
+We must also rename the columns for compatibility with *igraph* and *tidygraph*.
+
+For edges, we will rename `source` and `target` to `from` and `to` respectively.
+
+For nodes, we will rename `id` to `name`.
+:::
+
+# 3 Preparing the Nodes
+
+## 3.1 Shaping the data
+
+We will now prepare the nodes according to the above considerations.
+
+```{r}
+mc3_nodes_clean <- mc3_nodes_lite %>%
+  rename(name = id) %>%
+  mutate(
+    alias = sapply(name, to_initials),
+    supertype = strsplit(type, ".", fixed=TRUE) %>% sapply('[', 2),
+    # Get the last type as subtype. In the case of Entity.Person,
+    # both supertype and subtype are "Person".
+    subtype = strsplit(type, ".", fixed=TRUE) %>% sapply(tail, n=1),
+    included = 1
+  ) %>% select(name, alias, supertype, subtype, product_services, included)
+```
+
+## 3.2 Checking the type fields
+
+Let's confirm if the types have been mapped correctly to the corresponding `supertype` and `subtype`.
+
+```{r}
+mc3_nodes_clean %>%
+  group_by(supertype, subtype) %>%
+  summarize(count = n()) %>%
+  arrange(-count) %>%
+  kable()
+```
+
+## 3.3 Checking the rest of the data
+
+Let's also inspect the rest of the data if they are in the form we need.
+
+```{r}
+mc3_nodes_clean %>% head() %>% kable()
+```
+
+The alias was successfully generated based on the node name. The dataframe also has all the columns we need.
+
+# 4 Preparing the Edges
+
+## 4.1 Shaping the data
+
+With the previous considerations, we will shape the edge data.
+
+```{r}
+mc3_edges_clean <- mc3_edges_lite %>%
+  rename(from = source, to = target, ) %>%
+  mutate(
+    supertype = ifelse(
+      grepl("Event.Owns", type),
+      "Ownership",
+      ifelse(grepl("Relationship", type), "Relationship", "Employment")
+    ),
+    subtype = strsplit(type, ".", fixed = TRUE) %>% sapply(tail, n = 1),
+    # Convert date strings to datetime
+    start_date = substr(start_date, 1, 10) %>% as_date(),
+    end_date = substr(end_date, 1, 10) %>% as_date()
+  ) %>%
+  filter(from != to) %>%
+  group_by(from, to, supertype, subtype, start_date, end_date) %>%
+  summarize(weight = n())
+```
+
+## 4.2 Checking the type fields
+
+Let's confirm if the types have been mapped correctly to the corresponding `supertype` and `subtype`.
+
+```{r}
+mc3_edges_clean %>%
+  group_by(supertype, subtype) %>%
+  summarize(count = n()) %>%
+  arrange(-count) %>%
+  kable()
+```
+
+## 4.3 Checking the rest of the data
+
+Let's also inspect the rest of the data if they are in the form we need.
+
+```{r}
+mc3_edges_clean %>% head() %>% kable()
+```
+
+The dates columns only have the date components, not the time. The dataframe also has all the columns we need.
+
+# 5 Preparing the Networks
+
+## 5.1 Supernetwork
+
+We will generate supernetwork containing all the nodes and edges we prepared.
+
+```{r}
+supernetwork = tbl_graph(
+  edges = mc3_edges_clean,
+  nodes = mc3_nodes_clean,
+  directed = TRUE
+)
+```
+
+We will save this as an RDS file for use in the Shiny app.
+
+```{r}
+write_rds(supernetwork, "data/rds/supernetwork.rds")
+```
+
+## 5.2 Filter by subnetwork
+
+The supernetwork is very large and not suitable for visualization as it requires a lot of computing resources to visualize.
+
+Hence, we will create a function that will enable us to focus on the network of a given node. We will define a function `extract_subnetwork` for this.
+
+```{r}
+extract_subnetwork <- function(graph, node_name, distance=-1) {
+  # negative distance will show full graph
+  node <- which(V(graph)$name == node_name)
+  
+  if(length(node) == 0) {
+    # Return empty graph
+    return(tbl_graph())
+  }
+  
+  distance <- ifelse(distance < 0, length(graph), distance)
+  vertices <- ego(graph, nodes = node, order = distance)[[1]]
+  igraph_subgraph <- induced_subgraph(graph, vids = vertices)
+  nodes_df <- as_data_frame(igraph_subgraph, what = "vertices")
+  edges_sf <- as_data_frame(igraph_subgraph, what = "edges")
+  tbl_graph(nodes=nodes_df, edges=edges_sf, directed=is_directed(graph))
+}
+```
+
+::: {.callout-tip appearance="simple"}
+### About the function
+
+This function generates a subnetwork from a **graph** based on the nodes in proximity to **reference node**.
+
+The size of the network can be controlled by the **distance** of the other nodes from the reference node. If the distance is negative, it will include all nodes connected in any way to the reference node.
+
+It uses `ego` from `igraph` to figure out which nodes are connected within a given distance from a node.
+:::
+
+## 5.3 Filter by date
+
+Next, to enable inspecting temporal patterns, we will filter the edges and nodes based on their existence on the given date.
+
+We will define `extract_network_snapshot` to enable this filtering.
+
+```{r}
+extract_network_snapshot <- function(graph, datestring, delete = FALSE) {
+  date <- as_date(datestring)
+  
+  graph_nodes = as_data_frame(graph, what = "vertices")
+  graph_edges = as_data_frame(graph, what = "edges")
+  
+  if(is.na(date) || vcount(graph) == 0) {
+    return(graph)
+  }
+  
+  # Assume transition is at 12 AM of given date
+  graph_edges <- graph_edges %>%
+    mutate(
+      included = ifelse(is.na(start_date) | (
+        start_date <= date &
+          (is.na(end_date) |
+             end_date > date)
+      ), 1, 0)
+    )
+  
+  filtered_edges <- graph_edges %>% filter(included == 1)
+    
+  graph_nodes <- graph_nodes %>%
+    mutate(included = (
+      name %in% filtered_edges$from | name %in% filtered_edges$to
+    ))
+  
+  if(!delete) {
+    return(
+      tbl_graph(nodes = graph_nodes,
+                edges = graph_edges,
+                directed = is_directed(graph))
+    )
+  }
+  
+  tbl_graph(nodes = graph_nodes %>% filter(included == 1),
+            edges = filtered_edges,
+            directed = is_directed(graph))
+}
+```
+
+::: {.callout-tip appearance="simple"}
+### About the function
+
+This function sets `included` to `true` if the edge is active during the given date. For the nodes, they are considered active if they are connected to at least one other node at that point in time.
+
+There is also an option to delete the inactive elements altogether, which is useful to calculate measures of centrality on the network structure at that point in time.
+:::
