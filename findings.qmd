@@ -1,3 +1,33 @@
 ---
 title: "Findings"
 ---
+
+## 1. Typical transactions from an investor usually involves only one industry.
+
+![](images/investor1-01.png)![](images/investor2-01.png)
+
+In the given examples, Tonya demonstrates a strategic focus on investing in companies associated with engines, while Johnny directs his investments towards the seafood industry. This distinction underscores a prevalent pattern where investors often gravitate towards sectors they possess familiarity with, leveraging their knowledge and insights for informed decision-making in their investment strategies.
+
+Conversely, investing completely unrelated industries may be perceived as unconventional or even suspicious, as it deviates from the norm of investing in areas aligned with one's expertise or established market understanding. This divergence from expected investment patterns prompts scrutiny into the rationale behind such decisions, and the potential risks associated with investing outside one's domain of familiarity.
+
+## 2. Downs Group attract an unusually high number of investors, which raises suspicions.
+
+![](images/clipboard-72079703.png)
+
+While most companies attract fewer than 10 new investors per year, Downs Group attracted 120 shareholders in 2034. This raises suspicion, as investors typically exercise caution when investing in new companies. Such a significant surge in shareholder interest prompt questions about what factors might have contributed to this rapid increase in investor confidence towards Downs Group.
+
+## 3. The top 22 investors are investing in similar companies and collectively hold significant stakes in them.
+
+![](images/person2.png)![](images/person1.png)
+
+![](images/circle.png)
+
+The companies chosen by the top investors exhibit striking similarities. Upon examining image 3, it becomes evident that these investors not only target the same companies but also exert considerable influence due to the minimal presence of external shareholders or owners. This scenario suggests that a small, influential group of investors holds significant control over these companies.
+
+While these companies are not directly interconnected, they are intricately tied through the shared ownership and influential decisions made by this select group of shareholders. This concentration of ownership raises important considerations about the dynamics of corporate governance and market competition. As these investors continue to consolidate their positions, their collective influence could shape industry trends and strategic outcomes across the market landscape.
+
+## 4. Some companies are interconnected and controlled by a single individual.
+
+![](images/isla.png)
+
+In this scenario, Isla is the beneficial owner of all the interconnected companies. It clearly indicates that she holds a significant and influential investment stake across these enterprises. By maintaining such extensive ownership, Isla likely exerts substantial control over the strategic and operational decisions of these companies, steering their direction and shaping their market behavior. This level of concentrated ownership underscores her role as a major investor, highlighting her pivotal influence within this network of businesses.
