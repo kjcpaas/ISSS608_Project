@@ -12,7 +12,8 @@ website:
         - methodology/data_preparation.qmd
         - methodology/data_exploration.qmd
         - methodology/statistical_analysis.qmd
-        - methodology/findings.qmd
+      - href: findings.qmd
+        text: Findings [TODO]
       - href: poster.qmd
         text: Poster [TODO]
       - href: meeting_minutes.qmd

@@ -1,3 +1,470 @@
 ---
 title: "Data Exploration and Visualization"
+format: html
+execute: 
+  echo: true
+  eval: true
+  warning: false
+  freeze: true
 ---
+
+In this part we will visualize the network and look for temporal and structural patterns.
+
+We will use the inferences we make to create the Shiny App.
+
+For the purposes of this this investigation, we will focus on the network of the **SouthSeafood Express Corp**.
+
+# 1 Setup
+
+## 1.1 Loading Packages
+
+::: {.callout-note collapse="true"}
+### Package List
+
+We will use the following packages.
+
+-   [knitr](https://cran.r-project.org/web/packages/knitr/index.html) - For better table displays
+
+-   [tidyverse](https://www.tidyverse.org/) - Data science tools
+
+-   [tidygraph](https://cran.r-project.org/web/packages/tidygraph/index.html) - For graph manipulations
+
+-   [igraph](https://cran.r-project.org/web/packages/igraph/index.html) - Contains functions for network analysis
+
+-   [ggraph](https://ggraph.data-imaginist.com/) - For plotting network data
+
+-   [ggiraph](https://cran.r-project.org/web/packages/ggiraph/index.html) - Interactive plots
+
+-   [DT](https://rstudio.github.io/DT/) - interactive tables
+
+-   [ggtext](https://cran.r-project.org/web/packages/ggtext/index.html) - Tools for text formatting
+
+-   [scales](https://scales.r-lib.org/) - Extends functions to operate on `ggplot2` scales. Useful for wrapping text and formatting numbers in axes.
+:::
+
+```{r}
+pacman::p_load(knitr, tidyverse, tidygraph, igraph, ggraph, ggiraph, DT, ggtext, scales)
+```
+
+## 1.2 Loading the data
+
+We will load the `supernetwork` data from the RDS we prepared during data preparation.
+
+```{r}
+supernetwork <- readRDS("data/rds/supernetwork.rds")
+```
+
+# 2 Extracting the subnetwork
+
+## 2.1 Extracting connected network
+
+We will use the [extract_subnetwork function](/methodology/data_preparation#filter-by-subnetwork) to extract the subnetwork within distance = 3 of **SouthSeafood Express Corp.**
+
+```{r, include=FALSE}
+#| echo: false
+source("helpers/extract_subnetwork.R", local = TRUE)$value
+```
+
+```{r}
+sec_network <- supernetwork %>% extract_subnetwork("SouthSeafood Express Corp", distance = 3)
+```
+
+Let us check the node and edge counts to confirm if this is a smaller graph.
+
+::: panel-tabset
+### Node Count
+
+```{r}
+vcount(sec_network)
+```
+
+### Edge Count
+
+```{r}
+ecount(sec_network)
+```
+:::
+
+## 2.2 Most active years
+
+The edges of the subnetwork contains relationship from all-time.
+
+::: panel-tabset
+### Identifying most active years
+
+We will prioritize our investigation by activity. In order to do this, we need to identify the years with the most number of transactions for the network.
+
+```{r}
+#| code-fold: true
+sec_edges <- sec_network %>% as_data_frame(what="edges")
+
+start_df <- sec_edges %>%
+  mutate(year = lubridate::year(start_date)) %>%
+  group_by(year) %>% summarize(count = n())
+
+end_df <- sec_edges %>%
+  mutate(year = lubridate::year(end_date)) %>%
+  group_by(year) %>% summarize(count = n())
+
+txns_per_year <- start_df %>% rbind(end_df) %>%
+  group_by(year) %>% summarize(count = sum(count)) %>%
+  filter(!is.na(year))
+  
+ggplot(txns_per_year, aes(x = year, y = count, fill = year)) +
+  geom_bar(stat = "identity",
+           width = 0.75,
+           fill = ifelse(txns_per_year$year == 2035, "blue", "grey50")) +
+  geom_text(
+    aes(label = count), nudge_y = 0.35, size = 4.5,
+    family = "Roboto Condensed", fontface = "bold") +
+  scale_x_continuous(n.breaks = 8) +
+  scale_y_continuous(breaks = breaks_pretty()) +
+  labs(x = "Year", y = "Number of transactions") +
+  ggtitle(
+    "Yearly Network Transactions",
+    "2035 is the the most active year for SouthSeafood Express Corp's network"
+  ) +
+  theme_minimal() +
+  theme(
+    text = element_text(family = "Roboto Condensed"),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(),
+    axis.ticks = element_line(),
+    plot.title = element_text(face = "bold"),
+  )
+```
+
+**2035** is the year that has the most transactions. Let examine this year more closely.
+
+::: {.callout-note appearance="simple"}
+#### Double counting
+
+Take note that an edge may be counted twice as there are a **maximum of 2 events** per edge. One for starting the relationship and another for ending the relationship.
+:::
+
+### Examining the transactions
+
+We will use an interactive datatable to investigate the transactions for this year.
+
+```{r}
+sec_network %>%
+  as_data_frame(what="edges") %>%
+  filter((year(start_date) == 2035) | (year(end_date) == 2035)) %>%
+  select(from, to, subtype, start_date, end_date) %>%
+  arrange(start_date) %>%
+  datatable()
+```
+:::
+
+::: callout-tip
+### Findings
+
+2035 is a suspicious year for this network as there our many Shareholdership transactions that happened.
+
+The most notable are in **rows 4 and 8**, which indicate a change in Shareholdership of **SouthSeafood Express Corp** from **AguaLeska Transit N.V.** to **Tainamarine Fishing Co.**
+
+The first in this series of events is **Liam Conti** giving up the shareholdership of **AguaLeska Transit N.V.**
+
+This is very suspicious as this can indicate that Liam Conti wants to distance himself from **SouthSeafood Express Corp** after the company was caught illegal fishing.
+:::
+
+# 3 Network Visualization
+
+While were able to derive some insights from the table, it can only give us a hint as to the time period that we should look at more closely.
+
+To better see patterns in the network, we need to visualize it.
+
+## 3.1 Plotting Function
+
+We will use the function below to visualize the business relationships within the network:
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show MAPPINGS"
+
+MAPPINGS = list(
+  # Available shapes: https://www.datanovia.com/en/blog/ggplot-point-shapes-best-tips/
+  node_supertype_to_shape = c(
+    "Person" = 24, # Triangle
+    "Organization" = 21 # Circle
+  ),
+  # Color schemes
+  # Colorblind pallettes from https://davidmathlogic.com/colorblind
+  node_subtype_to_color = c(
+    "Person" = "#44AA99",
+    "CEO" = "#117733",
+    "Company" = "#DDCC77",
+    "FishingCompany" = "#88CCEE",
+    "LogisticsCompany" = "#332288",
+    "FinancialCompany" = "#AA4499",
+    "NGO" = "#CC6677",
+    "NewsCompany" = "#882255"
+  ),
+  
+  edge_relationship_subtype_to_color = c(
+    "WorksFor" = "#D81B60",
+    "Shareholdership" = "#FFC107",
+    "BeneficialOwnership" = "#004D40",
+    "FamilyRelationship" = "#1E88E5"
+  )
+)
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show COMMON_THEME"
+COMMON_THEME = theme(
+  text = element_text(family = "Roboto Condensed", color = "grey50"),
+  plot.title = element_text(size = 12, margin = margin(b = 6), color = "grey25"),
+  plot.subtitle = element_markdown(size = 8, margin = margin(b = 6), color = "grey50"),
+  plot.margin = margin(2, 0, 0, 0, unit = "pt"),
+  
+  # Legend styles
+  legend.position = "right",
+  legend.location = "plot",
+  legend.justification = "top",
+  legend.direction = "vertical",
+  legend.title = element_markdown(
+    color = "grey25",
+    face = "bold",
+    size = unit(8, "pt")
+  ),
+  legend.text = element_text(size = unit(6, "pt"), vjust = 0.5),
+  legend.box.spacing = unit(4, "pt"),
+  legend.margin = margin(r = 6),
+  legend.spacing.x = unit(2, "pt"),
+  legend.spacing.y = unit(8, "pt"),
+  legend.key.size = unit(12, "pt"),
+  
+  panel.border = element_rect(
+    color = "grey50",
+    fill = NA,
+    linewidth = 0.5
+  )
+)
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show code for plot_fishing_relationships"
+
+plot_fishing_relationships <- function(graph,
+                                       # Name of nodes to emphasize
+                                       emphasize_nodes = c(),
+                                       # Layout options
+                                       layout = "nicely",
+                                       title = NULL,
+                                       subtitle = NULL) {
+  set.seed(4231)
+  
+  if(vcount(graph) == 0) {
+    return(NULL)
+  }
+  
+  nodes <- as_data_frame(graph, what = "vertices")
+  
+  g <- ggraph(graph, layout = layout) +
+    # Render nodes
+    geom_point_interactive(
+      aes(
+        x = x,
+        y = y,
+        # Replace ' as it causes tooltips to not render correctly in JS
+        data_id = sub("'", "&#39;", name),
+        tooltip = sprintf("%s<br/>(%s)", sub("'", "&#39;", name), subtype),
+        fill = subtype,
+        # To show people as triangle, organizations as circle
+        # See scale_shape_manual code below
+        shape = supertype,
+      ),
+      alpha = nodes$included,
+      size = 7.5,
+      # Thicken border if emphasized
+      color = ifelse(nodes$name %in% emphasize_nodes, "black", "grey50"),
+      stroke = ifelse(nodes$name %in% emphasize_nodes, 1, 0.5),
+    ) +
+    geom_node_text(
+      aes(label = alias),
+      family = "Roboto Condensed",
+      size = 2,
+      color = "white",
+      fontface = ifelse(nodes$name %in% emphasize_nodes, "bold", "plain"),
+      alpha = nodes$included,
+    ) +
+    
+    # Render edges. Use geom_edge fan so edges along the same path don't overlap
+    geom_edge_fan(
+      aes(
+        color = subtype,
+        filter = ifelse(included == 1, TRUE, FALSE)
+      ),
+      strength = 0.5,
+      arrow = arrow(type = "closed", length = unit(2, "pt")),
+      end_cap = circle(3.2, "mm"),
+      start_cap = circle(3.2, "mm"),
+      alpha = 0.8
+    ) +
+    scale_shape_manual(values = MAPPINGS$node_supertype_to_shape) +
+    scale_fill_manual(values = MAPPINGS$node_subtype_to_color) +
+    scale_edge_color_manual(values = MAPPINGS$edge_relationship_subtype_to_color) +
+    
+    # Change legend names
+    labs(shape = "Node Supertypes",
+         fill = "Node Subtypes",
+         edge_color = "Edge Subtypes") +
+    
+    # Make sure the plot is not clipped
+    scale_x_continuous(expand = expansion(mult = c(0.10, 0.10))) +
+    scale_y_continuous(expand = expansion(mult = c(0.10, 0.10))) +
+    
+    # Style legend keys
+    guides(
+      shape = guide_legend(
+        override.aes = list(size = 3, fill = "blue"),
+        order = 1
+      ),
+      fill = guide_legend(
+        override.aes = list(
+          size = 4,
+          shape = 22,
+          color = NA
+        ),
+        order = 2,
+      ),
+      edge_color = guide_legend(order = 3),
+    ) +
+    ggtitle(title, subtitle) +
+    
+    # Style graph
+    unset_graph_style() +
+    theme_graph(base_family = "Roboto Condensed",
+                plot_margin = margin(0)) +
+    COMMON_THEME
+  
+  girafe(
+    ggobj = g,
+    width_svg = 6,
+    height_svg = 6 * 0.618,
+    options = list(
+      opts_tooltip(
+        css = paste0(
+          "background-color:black;color:white;",
+          "font-family:Roboto Condensed;font-size:10pt;",
+          "padding:4px;text-align:center;"
+        ),
+      ),
+      opts_sizing(rescale = TRUE),
+      opts_selection(type = "none"),
+      opts_zoom(min = 1, max = 5)
+    )
+  )
+}
+```
+
+## 3.2 Plotting the Network (distance = 3)
+
+With the above function, we can plot the state of the network before and after 2035.
+
+```{r, include=FALSE}
+#| echo: false
+source("helpers/extract_network_snapshot.R", local = TRUE)$value
+```
+
+::: panel-tabset
+### Before 2035
+
+```{r}
+#| code-fold: true
+sec_network %>%
+  extract_network_snapshot("2034-12-31") %>%
+  plot_fishing_relationships(
+    emphasize_nodes = c("SouthSeafood Express Corp", "Liam Conti"),
+    title = "SouthSeafood Express Corp's Network (distance = 3) on Dec 31, 2034",
+    subtitle = "**Liam Conti** is the person ultimately in control of the company via **AguaLeska Transit N.V.**"
+  )
+```
+
+### After 2035
+
+```{r}
+#| code-fold: true
+sec_network %>%
+  extract_network_snapshot("2036-01-01") %>%
+  plot_fishing_relationships(
+    emphasize_nodes = c("SouthSeafood Express Corp", "Liam Conti"),
+    title = "SouthSeafood Express Corp's Network (distance = 3) on Jan 1, 2036",
+    subtitle = "Liam Conti **distanced** himself from the company while still maintaining some form of control through a series of companies."
+  )
+```
+:::
+
+::: callout-tip
+### Findings
+
+The visualization confirms our initial inference that **Liam Conti** distanced himself from **SouthSeafood Express Corp** after the discovery of illegal fishing.
+
+It also reveals another beneficiary of this action, **Fintan** **Park**, who is also a beneficial owner of **StitchtingMarine Shipping Company**, which is the company who eventually holds the power over **SouthSeafood Express Corp**.
+:::
+
+## 3.3 Plotting the Network (all connected nodes)
+
+It is also important to look at the wider network if there are other suspicious changes and additional information related to Liam Conti's actions.
+
+::: panel-tabset
+### Before 2035
+
+```{r}
+#| code-fold: true
+supernetwork %>%
+  extract_subnetwork("SouthSeafood Express Corp") %>%
+  extract_network_snapshot("2034-12-31") %>%
+  plot_fishing_relationships(
+    emphasize_nodes = c(
+      "SouthSeafood Express Corp",
+      "Liam Conti",
+      "Nadia Conti",
+      "Lena Conti-Park",
+      "Fintan Park",
+      "Nathan Conti",
+      "Lemuel Conti",
+      "Fabio Conti",
+      "Samuel Conti"
+      ),
+    title = "SouthSeafood Express Corp's Full Network on Dec 31, 2034",
+    subtitle = "Members of the **Conti Clan** are related to all fishing businesses in the network."
+  )
+```
+
+### After 2035
+
+```{r}
+#| code-fold: true
+supernetwork %>%
+  extract_subnetwork("SouthSeafood Express Corp") %>%
+  extract_network_snapshot("2036-01-01") %>%
+  plot_fishing_relationships(
+    emphasize_nodes = c(
+      "SouthSeafood Express Corp",
+      "Liam Conti",
+      "Nadia Conti",
+      "Lena Conti-Park",
+      "Fintan Park",
+      "Nathan Conti",
+      "Lemuel Conti",
+      "Fabio Conti",
+      "Samuel Conti",
+      "The News Buoy"
+      ),
+    title = "SouthSeafood Express Corp's Full Network on Jan 1, 2036",
+    subtitle = "The Conti Clan obtained control of a news company, **The News Buoy** in 2035."
+  )
+```
+:::
+
+::: callout-tip
+### Findings
+
+Looking at the wider network reveals that all the fishing companies in the network are under a control of a group of people, the **Conti Clan**. Although not formally related as family members in the graph, their family names indicate the relationship. Some influential people like **Fintan Park** are also part of the clan by marriage (e.g., to **Lena-Conti Park**).
+
+Another suspicious event in 2035 is the clan's acquisition of shareholdership in a news company, **The News Buoy** through **Samuel Conti**. This could be an effort to influence the narrative of SouthSeafood and the whole Conti Clan's fishing activities.
+:::

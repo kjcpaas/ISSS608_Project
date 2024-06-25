@@ -1,5 +1,11 @@
 ---
 title: "Data Preparation"
+format: html
+execute: 
+  echo: true
+  eval: true
+  warning: false
+  freeze: true
 ---
 
 This document will go through how we prepare the data that will be used for the Shiny application.
@@ -267,6 +273,22 @@ supernetwork = tbl_graph(
   directed = TRUE
 )
 ```
+
+Let's check the size of this network.
+
+::: panel-tabset
+### Node Count
+
+```{r}
+vcount(supernetwork)
+```
+
+### Edge Count
+
+```{r}
+ecount(supernetwork)
+```
+:::
 
 We will save this as an RDS file for use in the Shiny app.
 
