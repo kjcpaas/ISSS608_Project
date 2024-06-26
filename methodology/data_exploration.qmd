@@ -168,7 +168,7 @@ The first in this series of events is **Liam Conti** giving up the shareholdersh
 This is very suspicious as this can indicate that Liam Conti wants to distance himself from **SouthSeafood Express Corp** after the company was caught illegal fishing.
 :::
 
-# 3 Network Visualization
+# 3 Visualizing the Network
 
 While were able to derive some insights from the table, it can only give us a hint as to the time period that we should look at more closely.
 
@@ -205,6 +205,12 @@ MAPPINGS = list(
     "WorksFor" = "#D81B60",
     "Shareholdership" = "#FFC107",
     "BeneficialOwnership" = "#004D40",
+    "FamilyRelationship" = "#1E88E5"
+  ),
+  edge_power_subtype_to_color = c(
+    "WorksFor" = "#D81B60",
+    "HasShareholder" = "#FFC107",
+    "OwnedBy" = "#004D40",
     "FamilyRelationship" = "#1E88E5"
   )
 )
@@ -467,4 +473,342 @@ supernetwork %>%
 Looking at the wider network reveals that all the fishing companies in the network are under a control of a group of people, the **Conti Clan**. Although not formally related as family members in the graph, their family names indicate the relationship. Some influential people like **Fintan Park** are also part of the clan by marriage (e.g., to **Lena-Conti Park**).
 
 Another suspicious event in 2035 is the clan's acquisition of shareholdership in a news company, **The News Buoy** through **Samuel Conti**. This could be an effort to influence the narrative of SouthSeafood and the whole Conti Clan's fishing activities.
+:::
+
+# 4 Visualizing Influence
+
+```{r, include=FALSE}
+#| echo: false
+source("helpers/convert_edges_to_power_flow.R", local = TRUE)$value
+source("helpers/convert_graph_to_power_flow.R", local = TRUE)$value
+```
+
+## 4.1 Calculating measures of centrality
+
+To visualize influence, we first need to calculate the measures of centrality for each state of the network from **before and after 2035**.
+
+```{r}
+sec_network_full <- supernetwork %>%
+  extract_subnetwork("SouthSeafood Express Corp") %>%
+  convert_graph_to_power_flow()
+```
+
+::: panel-tabset
+### Before 2035
+
+```{r}
+nodes_influence_before <- sec_network_full %>%
+  extract_network_snapshot('2034-12-31', delete = TRUE) %>%
+  mutate(
+    pagerank = centrality_pagerank(weights = E(.)$weight),
+    betweenness = centrality_betweenness(weights = E(.)$weight, normalized = TRUE)
+  ) %>%
+  as_data_frame(what="vertices")
+
+# Generate the graph for plotting
+sec_influence_before <- sec_network_full %>%
+  extract_network_snapshot('2034-12-31') %>%
+  left_join(nodes_influence_before)
+
+nodes_influence_before %>% arrange(name) %>% select(-name) %>% kable()
+```
+
+### After 2035
+
+```{r}
+nodes_influence_after <- sec_network_full %>%
+  extract_network_snapshot('2036-01-01', delete = TRUE) %>%
+  mutate(
+    pagerank = centrality_pagerank(weights = E(.)$weight),
+    betweenness = centrality_betweenness(weights = E(.)$weight, normalized = TRUE)
+  ) %>%
+  as_data_frame(what="vertices")
+
+# Generate the graph for plotting
+sec_influence_after <- sec_network_full %>%
+  extract_network_snapshot('2036-01-01') %>%
+  left_join(nodes_influence_after)
+
+nodes_influence_after %>% arrange(name) %>% select(-name) %>% kable()
+```
+:::
+
+## 4.2 Plotting function
+
+We will use the function `plot_centrality()` to visualize the influence within the network:
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show code for plot_centrality()"
+
+plot_centrality <- function(graph,
+                            # Column containing centrality measure, can be
+                            # pagerank: for most powerful nodes
+                            # betweeness: for power brokers
+                            centrality_col,
+                            # Name of nodes to emphasize
+                            emphasize_nodes = c(),
+                            # Layout options
+                            layout = "nicely",
+                            title = NULL,
+                            subtitle = NULL) {
+  set.seed(4231)
+  
+  if (!(centrality_col %in% c("pagerank", "betweenness"))) {
+    stop("Only pagerank and betweenness centralities are relevant in our analysis")
+  }
+  
+  nodes <- as_data_frame(graph, what = "vertices")
+  
+  edges <- as_data_frame(graph, what = "edges")
+  max_weight <- edges$weight %>% max()
+  min_weight <- edges$weight %>% min()
+  
+  g <- ggraph(graph, layout = layout) +
+    # Render nodes
+    geom_point_interactive(
+      aes(
+        x = x,
+        y = y,
+        data_id = sub("'", "&#39;", name),
+        tooltip = sprintf(
+          "%s (%s)<br/>Score: %0.5f",
+          sub("'", "&#39;", name),
+          subtype, 
+          .data[[centrality_col]]
+        ),
+        # To show people as triangle, organizations as circle
+        # See scale_shape_manual code below
+        shape = supertype,
+        # Get centrality measures from a column
+        fill = .data[[centrality_col]],
+        size = .data[[centrality_col]],
+      ),
+      alpha = nodes$included,
+      # Thicken border if emphasized
+      color = ifelse(nodes$name %in% emphasize_nodes, "black", "grey50"),
+      stroke = ifelse(nodes$name %in% emphasize_nodes, 1, 0.5),
+    ) +
+    geom_node_label(
+      aes(label = alias),
+      family = "Roboto Condensed",
+      size = 2,
+      color = alpha("black", nodes$included),
+      fontface = ifelse(nodes$name %in% emphasize_nodes, "bold", "plain"),
+      alpha = nodes$included
+    ) +
+    
+    # Render edges. Use geom_edge fan so edges along the same path don't overlap
+    geom_edge_fan(
+      aes(
+        color = subtype,
+        edge_width = weight,
+        filter = ifelse(included == 1, TRUE, FALSE)
+      ),
+      strength = 0.5,
+      arrow = arrow(type = "closed", length = unit(2, "pt")),
+      end_cap = circle(1.6, "mm"),
+      start_cap = circle(1.6, "mm"),
+      alpha = 0.8
+    ) +
+    scale_shape_manual(values = MAPPINGS$node_supertype_to_shape) +
+    scale_edge_color_manual(values = MAPPINGS$edge_power_subtype_to_color) +
+    
+    # Centrality visualization
+    scale_fill_gradient(
+      high = ifelse(centrality_col == "pagerank", "blue", "orange"),
+      low = "white"
+    ) +
+    scale_size_continuous(range = c(3, 12), guide = FALSE) +
+    
+    # Make sure edge widths are consistent across diff graphs
+    scale_edge_width(
+      range = c(min_weight * 0.2, max_weight * 0.2),
+      guide = "none"
+    ) +
+    
+    # Change legend names
+    labs(
+      fill = ifelse(
+        centrality_col == "pagerank",
+        "PageRank Score",
+        "Betweenness Score"
+      ),
+      shape = "Node Supertypes",
+      edge_color = "Edge Subtypes"
+    ) +
+    
+    # Make sure the plot is not clipped
+    scale_x_continuous(expand = expansion(mult = c(0.10, 0.10))) +
+    scale_y_continuous(expand = expansion(mult = c(0.10, 0.10))) +
+    
+    # Style legend keys
+    guides(
+      shape = guide_legend(
+        override.aes = list(
+          size = 3,
+          fill = "blue"
+        ),
+        order = 1
+      ),
+      edge_color = guide_legend(order = 2),
+      fill = guide_colorbar(order = 3)
+    ) +
+    ggtitle(title, subtitle) +
+    
+    # Style graph
+    unset_graph_style() +
+    theme_graph(base_family = "Roboto Condensed",
+                plot_margin = margin(0)) +
+    
+    COMMON_THEME
+  
+  girafe(
+    ggobj = g,
+    width_svg = 6,
+    height_svg = 6 * 0.618,
+    options = list(
+      opts_tooltip(
+        css = paste0(
+          "background-color:black;color:white;",
+          "font-family:Roboto Condensed;font-size:10pt;",
+          "padding:4px;text-align:center;"
+        ),
+      ),
+      opts_sizing(rescale = TRUE),
+      opts_selection(type = "none"),
+      opts_zoom(min = 1, max = 5)
+    )
+  )
+}
+```
+
+## 4.3 Visualizing Power Holders
+
+We will use the plotting function to plot the power holders.
+
+::: panel-tabset
+### Before 2035
+
+```{r}
+#| code-fold: true
+sec_influence_before %>%
+  plot_centrality(
+    centrality_col = "pagerank",
+    emphasize_nodes = "SouthSeafood Express Corp",
+    title = "SouthSeafood Express Corp's Full Network on Dec 31, 2034",
+    subtitle = "**Lemuel Conti** and other members of the Conti clan hold the most power in the network."
+  )
+```
+
+**Nodes List**
+
+```{r}
+#| code-fold: true
+sec_influence_before %>%
+  as_data_frame(what = "vertices") %>%
+  filter(included == 1) %>%
+  arrange(-pagerank) %>%
+  select(name, subtype, pagerank) %>%
+  mutate(pagerank = round(pagerank, 3)) %>%
+  datatable(rownames = FALSE)
+```
+
+### After 2035
+
+```{r}
+#| code-fold: true
+sec_influence_after %>%
+  plot_centrality(
+    centrality_col = "pagerank",
+    emphasize_nodes = "SouthSeafood Express Corp",
+    title = "SouthSeafood Express Corp's Full Network on Jan 1, 2036",
+    subtitle = "There is little no no change in influence as power holders of the Conti Clan members."
+  )
+```
+
+**Nodes List**
+
+```{r}
+#| code-fold: true
+sec_influence_after %>%
+  as_data_frame(what = "vertices") %>%
+  filter(included == 1) %>%
+  arrange(-pagerank) %>%
+  select(name, subtype, pagerank) %>%
+  mutate(pagerank = round(pagerank, 3)) %>%
+  datatable(rownames = FALSE)
+```
+:::
+
+::: callout-tip
+### Findings
+
+The actions of the **Conti Clan** to distance themselves from SouthSeafood Express Corp has little to no impact to their power over the system.
+
+**Liam Conti's** power wasn't impacted much even when his company, **AguaLeska Transit N.V.,** closed as a result of this series of events. Have a business network like the Conti Clan's lead to cooperation to maintain control, which can make it more difficult to crack down on illegal fishing in this network.
+:::
+
+## 4.4 Visualizing Power Brokers
+
+We will use the plotting function to plot the power brokers.
+
+::: panel-tabset
+### Before 2035
+
+```{r}
+#| code-fold: true
+sec_influence_before %>%
+  plot_centrality(
+    centrality_col = "betweenness",
+    emphasize_nodes = "SouthSeafood Express Corp",
+    title = "SouthSeafood Express Corp's Full Network on Dec 31, 2034",
+    subtitle = "Companies controlled by the Conti Clan are the power brokers in the network."
+  )
+```
+
+**Nodes List**
+
+```{r}
+#| code-fold: true
+sec_influence_before %>%
+  as_data_frame(what = "vertices") %>%
+  filter(included == 1) %>%
+  arrange(-betweenness) %>%
+  select(name, subtype, betweenness) %>%
+  mutate(betweenness = round(betweenness, 3)) %>%
+  datatable(rownames = FALSE)
+```
+
+### After 2035
+
+```{r}
+#| code-fold: true
+sec_influence_after %>%
+  plot_centrality(
+    centrality_col = "betweenness",
+    emphasize_nodes = "SouthSeafood Express Corp",
+    title = "SouthSeafood Express Corp's Full Network on Jan 1, 2036",
+    subtitle = "**StichtingMarine Shipping Company**'s influence increased as provides the only connection of the Contis to SouthSeafood Express Corp."
+  )
+```
+
+**Nodes List**
+
+```{r}
+#| code-fold: true
+sec_influence_after %>%
+  as_data_frame(what = "vertices") %>%
+  filter(included == 1) %>%
+  arrange(-betweenness) %>%
+  select(name, subtype, betweenness) %>%
+  mutate(betweenness = round(betweenness, 3)) %>%
+  datatable(rownames = FALSE)
+```
+:::
+
+::: callout-tip
+### Findings
+
+The influence of **StichtingMarine Shipping Company** as a power broker increased after "hiding" SouthSeafood Express Corp behind a series of companies. This is because **StichtingMarine Shipping Company** is the only connection of the Conti Clan to SouthSeafood Express Corp.
 :::

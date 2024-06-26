@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title> The Big Fish - Statistical Analysis [TODO]</title>
+<title> The Big Fish - Statistical Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -105,12 +105,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="dropdown-text">Data Preparation</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../methodology/data_exploration.html">
- <span class="dropdown-text">Data Exploration and Visualization</span></a>
+    <a class="dropdown-item" href="../methodology/statistical_analysis.html">
+ <span class="dropdown-text">Statistical Analysis</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../methodology/statistical_analysis.html">
- <span class="dropdown-text">Statistical Analysis [TODO]</span></a>
+    <a class="dropdown-item" href="../methodology/data_exploration.html">
+ <span class="dropdown-text">Data Exploration and Visualization</span></a>
   </li>  
     </ul>
   </li>
@@ -178,14 +178,25 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#measures-of-centrality" id="toc-measures-of-centrality" class="nav-link active" data-scroll-target="#measures-of-centrality">1 Measures of centrality</a>
+  <ul class="collapse">
+  <li><a href="#degree-centrality" id="toc-degree-centrality" class="nav-link" data-scroll-target="#degree-centrality">1.1 Degree centrality</a></li>
+  <li><a href="#pagerank-centrality" id="toc-pagerank-centrality" class="nav-link" data-scroll-target="#pagerank-centrality">1.2 Pagerank centrality</a></li>
+  <li><a href="#betweenness-centrality" id="toc-betweenness-centrality" class="nav-link" data-scroll-target="#betweenness-centrality">1.3 Betweenness centrality</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Statistical Analysis [TODO]</h1>
+<h1 class="title">Statistical Analysis</h1>
 </div>
 
 
@@ -202,8 +213,26 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="measures-of-centrality" class="level1">
+<h1>1 Measures of centrality</h1>
+<p>We will be using 3 different measures of centrality in the shiny app: degree, pagerank, and betweenness</p>
+<section id="degree-centrality" class="level2">
+<h2 class="anchored" data-anchor-id="degree-centrality">1.1 Degree centrality</h2>
+<p>We will use this in the <strong>Corporate Structures</strong> modules to identify the most active nodes in the system.</p>
+</section>
+<section id="pagerank-centrality" class="level2">
+<h2 class="anchored" data-anchor-id="pagerank-centrality">1.2 Pagerank centrality</h2>
+<p>We will use this measure of centrality to identify the <strong>Power Holders</strong>. The principle is that <em>the more incoming edges a node has, the more influential it is</em> and nodes to which they are connected share of that influence. (<a href="https://cambridge-intelligence.com/eigencentrality-pagerank/">Disney, 2020</a>)</p>
+</section>
+<section id="betweenness-centrality" class="level2">
+<h2 class="anchored" data-anchor-id="betweenness-centrality">1.3 Betweenness centrality</h2>
+<p>We will use this measure of centrality to identify the <strong>Power Brokers</strong>.</p>
+<p>Power Brokers must be nodes with <strong>both incoming and outgoing edges</strong>, so that they can connect a more powerful node to a less powerful node. Hence, having a large number of edges connected to a node is not enough (which the degree centrality offers).</p>
+<p>This is because if a node only has incoming or outgoing edges, it won’t be able to connect to other nodes to keep the flow going.</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

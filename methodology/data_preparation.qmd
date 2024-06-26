@@ -231,10 +231,11 @@ mc3_edges_clean <- mc3_edges_lite %>%
     subtype = strsplit(type, ".", fixed = TRUE) %>% sapply(tail, n = 1),
     # Convert date strings to datetime
     start_date = substr(start_date, 1, 10) %>% as_date(),
-    end_date = substr(end_date, 1, 10) %>% as_date()
+    end_date = substr(end_date, 1, 10) %>% as_date(),
+    included = 1
   ) %>%
   filter(from != to) %>%
-  group_by(from, to, supertype, subtype, start_date, end_date) %>%
+  group_by(from, to, supertype, subtype, start_date, end_date, included) %>%
   summarize(weight = n())
 ```
 
@@ -385,4 +386,186 @@ extract_network_snapshot <- function(graph, datestring, delete = FALSE) {
 This function sets `included` to `true` if the edge is active during the given date. For the nodes, they are considered active if they are connected to at least one other node at that point in time.
 
 There is also an option to delete the inactive elements altogether, which is useful to calculate measures of centrality on the network structure at that point in time.
+:::
+
+# 6 Preparing the power graph
+
+To figure out who are the most influential entities within the network, we have to look at the power dynamics in each relationship. This entails generating a graph from the relationship graph that reflects these dynamics.
+
+## 6.1 Arrow direction
+
+As we want to investigate the flow of power and resources, the direction will be from the **less powerful to more powerful** entity.
+
+## 6.2 Weights
+
+For the purpose of our analysis, we will score each relationship flow according to the following:
+
+-   Benefits from the resources: 1 (+1 if they are the owner of a company)
+
+-   A decision-maker on where resources go: 2 (+1 if they are the ultimate decision maker)
+
+-   Influential on the other person: 1 (only if target is a person)
+
+We will use the total as the weights for each edge. Lastly, we will **rename** the relationship to prevent confusion in case of direction reversal.
+
+## 6.3 Score table
+
+::: panel-tabset
+### BeneficialOwner
+
+Beneficial owners benefit from the resources of the company.
+
+While BeneficialOwners may or may not be Shareholders in the same company, they hold the ultimate decision-making power.
+
+|                            |         |
+|----------------------------|---------|
+| Current **From**           | Owner   |
+| Current **To**             | Company |
+| New **From** (Lower power) | Company |
+| New **To** (Higher power)  | Owner   |
+| New **subtype**            | OwnedBy |
+| Beneficiary                | 1 + 1   |
+| Decision-maker             | 2 + 1   |
+| Influential (on person)    | 0       |
+| **Total**                  | **5**   |
+
+: Beneficial Ownership {.bordered .striped}
+
+### Shareholdership
+
+Shareholders may receive proceeds from the profits of the company.
+
+They have some decision-making power within the company. However, it is the Beneficial Owner that ultimately gets the final say in decisions.
+
+|                            |                |
+|----------------------------|----------------|
+| Current **From**           | Shareholder    |
+| Current **To**             | Company        |
+| New **From** (Lower power) | Company        |
+| New **To** (Higher power)  | Shareholder    |
+| New **subtype**            | HasShareholder |
+| Beneficiary                | 1              |
+| Decision-maker             | 2              |
+| Influential (on person)    | 0              |
+| **Total**                  | **3**          |
+
+: Shareholdership {.bordered .striped}
+
+### WorksFor
+
+Employees are contractually obligated to act in the interests of their employer.
+
+Employers also influence what their employees do in the business.
+
+|                            |         |
+|----------------------------|---------|
+| Current **From**           | Owner   |
+| Current **To**             | Company |
+| New **From** (Lower power) | Company |
+| New **To** (Higher power)  | Owner   |
+| New **subtype**            | OwnedBy |
+| Beneficiary                |         |
+| Decision-maker             | 2       |
+| Influential (on person)    | 1       |
+| **Total**                  | 3       |
+
+: WorksFor {.bordered .striped}
+
+### FamilyRelationship
+
+As it is impossible to figure out the power dynamics within a family, we will retain direction and assume that the arrow points to the person that benefits more from the relationship.
+
+|                            |                    |
+|----------------------------|--------------------|
+| Current **From**           | Person 1           |
+| Current **To**             | Person 2           |
+| New **From** (Lower power) | Person 1           |
+| New **To** (Higher power)  | Person 2           |
+| New **subtype**            | FamilyRelationship |
+| Beneficiary                | 1                  |
+| Decision-maker             | 0                  |
+| Influential (on person)    | 1                  |
+| **Total**                  | **2**              |
+
+: FamilyRelationship {.bordered .striped}
+:::
+
+::: callout-note
+### Model Revision
+
+From the results of visualization in the original [Take-home Exercise 3](https://isss608-kjcpaas.netlify.app/take-home_exs/ex3/take-home_ex3#table-1), the model for the power graph resulted in the influence `FamilyRelationship` being too strong that it overrode all power held from business activities.
+
+We revised this to be unidirectional to lessen the impact and we cannot assume that family members have the same sharing dynamic.
+:::
+
+## 6.4 Converting relationship edges to power flow
+
+Using the table above, we will create a function to convert relationship edges to power flow. We will define a function `convert_edges_to_power_flow` to take care of converting edges to power graph
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code for convert_edges_to_power_flow()"
+convert_edges_to_power_flow <- function(edges) {
+  # Employee -> Employer, weight: 3
+  works_for <- edges %>% filter(subtype == "WorksFor") %>% mutate(weight = 3)
+  
+  # Person1 <-> Person2, weight: 2
+  family <- edges %>% filter(subtype == "FamilyRelationship") %>% mutate(weight = 2)
+  
+  # Shareholder <- Company, weight: 3
+  shareholder <- edges %>% filter(subtype == "Shareholdership") %>%
+    mutate(
+      temp = from,
+      from = to,
+      to = temp,
+      weight = 3,
+      # Rename to prevent confusion due to reversed arrows
+      subtype = "HasShareholder",
+    ) %>%
+    select(from, to, supertype, subtype, start_date, end_date, weight, included)
+  
+  # BeneficialOwner <- Company, weight: 5
+  owner <- edges %>% filter(subtype == "BeneficialOwnership") %>%
+    mutate(
+      temp = from,
+      from = to,
+      to = temp,
+      weight = 5,
+      # Rename to prevent confusion due to reversed arrows
+      subtype = "OwnedBy",
+    ) %>%
+    select(from, to, supertype, subtype, start_date, end_date, weight, included)
+  
+  works_for %>%
+    rbind(family) %>%
+    rbind(shareholder) %>%
+    rbind(owner)
+}
+```
+
+Let us check the resulting edges table to see if each edge type has been mapped correctly.
+
+::: panel-tabset
+### Relationship
+
+```{r}
+supernetwork %>%
+  as_data_frame(what = "edges") %>%
+  group_by(supertype, subtype) %>%
+  summarize(count = n()) %>%
+  arrange(-count) %>%
+  kable()
+```
+
+### Power
+
+```{r}
+supernetwork %>%
+  as_data_frame(what = "edges") %>%
+  convert_edges_to_power_flow() %>%
+  group_by(supertype, subtype) %>%
+  summarize(count = n()) %>%
+  arrange(-count) %>%
+  kable()
+```
 :::

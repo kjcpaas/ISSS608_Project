@@ -139,12 +139,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Data Preparation</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../methodology/data_exploration.html">
- <span class="dropdown-text">Data Exploration and Visualization</span></a>
+    <a class="dropdown-item" href="../methodology/statistical_analysis.html">
+ <span class="dropdown-text">Statistical Analysis</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../methodology/statistical_analysis.html">
- <span class="dropdown-text">Statistical Analysis [TODO]</span></a>
+    <a class="dropdown-item" href="../methodology/data_exploration.html">
+ <span class="dropdown-text">Data Exploration and Visualization</span></a>
   </li>  
     </ul>
   </li>
@@ -246,6 +246,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#supernetwork" id="toc-supernetwork" class="nav-link" data-scroll-target="#supernetwork">5.1 Supernetwork</a></li>
   <li><a href="#filter-by-subnetwork" id="toc-filter-by-subnetwork" class="nav-link" data-scroll-target="#filter-by-subnetwork">5.2 Filter by subnetwork</a></li>
   <li><a href="#filter-by-date" id="toc-filter-by-date" class="nav-link" data-scroll-target="#filter-by-date">5.3 Filter by date</a></li>
+  </ul></li>
+  <li><a href="#preparing-the-power-graph" id="toc-preparing-the-power-graph" class="nav-link" data-scroll-target="#preparing-the-power-graph">6 Preparing the power graph</a>
+  <ul class="collapse">
+  <li><a href="#arrow-direction" id="toc-arrow-direction" class="nav-link" data-scroll-target="#arrow-direction">6.1 Arrow direction</a></li>
+  <li><a href="#weights" id="toc-weights" class="nav-link" data-scroll-target="#weights">6.2 Weights</a></li>
+  <li><a href="#score-table" id="toc-score-table" class="nav-link" data-scroll-target="#score-table">6.3 Score table</a></li>
+  <li><a href="#converting-relationship-edges-to-power-flow" id="toc-converting-relationship-edges-to-power-flow" class="nav-link" data-scroll-target="#converting-relationship-edges-to-power-flow">6.4 Converting relationship edges to power flow</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -751,11 +758,12 @@ $ start_date &lt;chr&gt; "2016-10-29T00:00:00", "2035-06-03T00:00:00", "2028-11-
 <span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtype =</span> <span class="fu">strsplit</span>(type, <span class="st">"."</span>, <span class="at">fixed =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> <span class="fu">sapply</span>(tail, <span class="at">n =</span> <span class="dv">1</span>),</span>
 <span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Convert date strings to datetime</span></span>
 <span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">start_date =</span> <span class="fu">substr</span>(start_date, <span class="dv">1</span>, <span class="dv">10</span>) <span class="sc">%&gt;%</span> <span class="fu">as_date</span>(),</span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">end_date =</span> <span class="fu">substr</span>(end_date, <span class="dv">1</span>, <span class="dv">10</span>) <span class="sc">%&gt;%</span> <span class="fu">as_date</span>()</span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(from <span class="sc">!=</span> to) <span class="sc">%&gt;%</span></span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(from, to, supertype, subtype, start_date, end_date) <span class="sc">%&gt;%</span></span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">weight =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">end_date =</span> <span class="fu">substr</span>(end_date, <span class="dv">1</span>, <span class="dv">10</span>) <span class="sc">%&gt;%</span> <span class="fu">as_date</span>(),</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">included =</span> <span class="dv">1</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(from <span class="sc">!=</span> to) <span class="sc">%&gt;%</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(from, to, supertype, subtype, start_date, end_date, included) <span class="sc">%&gt;%</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">weight =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="checking-the-type-fields-1" class="level2">
@@ -810,11 +818,12 @@ $ start_date &lt;chr&gt; "2016-10-29T00:00:00", "2035-06-03T00:00:00", "2028-11-
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 19%">
-<col style="width: 31%">
-<col style="width: 9%">
-<col style="width: 16%">
-<col style="width: 9%">
+<col style="width: 18%">
+<col style="width: 29%">
+<col style="width: 8%">
+<col style="width: 15%">
+<col style="width: 8%">
+<col style="width: 7%">
 <col style="width: 7%">
 <col style="width: 5%">
 </colgroup>
@@ -826,6 +835,7 @@ $ start_date &lt;chr&gt; "2016-10-29T00:00:00", "2035-06-03T00:00:00", "2028-11-
 <th style="text-align: left;">subtype</th>
 <th style="text-align: left;">start_date</th>
 <th style="text-align: left;">end_date</th>
+<th style="text-align: right;">included</th>
 <th style="text-align: right;">weight</th>
 </tr>
 </thead>
@@ -838,6 +848,7 @@ $ start_date &lt;chr&gt; "2016-10-29T00:00:00", "2035-06-03T00:00:00", "2028-11-
 <td style="text-align: left;">2034-12-31</td>
 <td style="text-align: left;">NA</td>
 <td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">4. SeaCargo Ges.m.b.H.</td>
@@ -846,6 +857,7 @@ $ start_date &lt;chr&gt; "2016-10-29T00:00:00", "2035-06-03T00:00:00", "2028-11-
 <td style="text-align: left;">Shareholdership</td>
 <td style="text-align: left;">2033-04-12</td>
 <td style="text-align: left;">NA</td>
+<td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="odd">
@@ -856,6 +868,7 @@ $ start_date &lt;chr&gt; "2016-10-29T00:00:00", "2035-06-03T00:00:00", "2028-11-
 <td style="text-align: left;">2028-12-02</td>
 <td style="text-align: left;">NA</td>
 <td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Aaron Acosta</td>
@@ -864,6 +877,7 @@ $ start_date &lt;chr&gt; "2016-10-29T00:00:00", "2035-06-03T00:00:00", "2028-11-
 <td style="text-align: left;">WorksFor</td>
 <td style="text-align: left;">2008-07-30</td>
 <td style="text-align: left;">NA</td>
+<td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="odd">
@@ -874,6 +888,7 @@ $ start_date &lt;chr&gt; "2016-10-29T00:00:00", "2035-06-03T00:00:00", "2028-11-
 <td style="text-align: left;">2008-09-14</td>
 <td style="text-align: left;">NA</td>
 <td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Aaron Allen</td>
@@ -882,6 +897,7 @@ $ start_date &lt;chr&gt; "2016-10-29T00:00:00", "2035-06-03T00:00:00", "2028-11-
 <td style="text-align: left;">BeneficialOwnership</td>
 <td style="text-align: left;">2025-03-06</td>
 <td style="text-align: left;">NA</td>
+<td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 </tr>
 </tbody>
@@ -1025,6 +1041,363 @@ About the function
 <div class="callout-body-container callout-body">
 <p>This function sets <code>included</code> to <code>true</code> if the edge is active during the given date. For the nodes, they are considered active if they are connected to at least one other node at that point in time.</p>
 <p>There is also an option to delete the inactive elements altogether, which is useful to calculate measures of centrality on the network structure at that point in time.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="preparing-the-power-graph" class="level1">
+<h1>6 Preparing the power graph</h1>
+<p>To figure out who are the most influential entities within the network, we have to look at the power dynamics in each relationship. This entails generating a graph from the relationship graph that reflects these dynamics.</p>
+<section id="arrow-direction" class="level2">
+<h2 class="anchored" data-anchor-id="arrow-direction">6.1 Arrow direction</h2>
+<p>As we want to investigate the flow of power and resources, the direction will be from the <strong>less powerful to more powerful</strong> entity.</p>
+</section>
+<section id="weights" class="level2">
+<h2 class="anchored" data-anchor-id="weights">6.2 Weights</h2>
+<p>For the purpose of our analysis, we will score each relationship flow according to the following:</p>
+<ul>
+<li><p>Benefits from the resources: 1 (+1 if they are the owner of a company)</p></li>
+<li><p>A decision-maker on where resources go: 2 (+1 if they are the ultimate decision maker)</p></li>
+<li><p>Influential on the other person: 1 (only if target is a person)</p></li>
+</ul>
+<p>We will use the total as the weights for each edge. Lastly, we will <strong>rename</strong> the relationship to prevent confusion in case of direction reversal.</p>
+</section>
+<section id="score-table" class="level2">
+<h2 class="anchored" data-anchor-id="score-table">6.3 Score table</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">BeneficialOwner</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">Shareholdership</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false">WorksFor</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-4" role="tab" aria-controls="tabset-5-4" aria-selected="false">FamilyRelationship</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<p>Beneficial owners benefit from the resources of the company.</p>
+<p>While BeneficialOwners may or may not be Shareholders in the same company, they hold the ultimate decision-making power.</p>
+<table class="table-bordered table-striped caption-top table">
+<caption>Beneficial Ownership</caption>
+<tbody>
+<tr class="odd">
+<td>Current <strong>From</strong></td>
+<td>Owner</td>
+</tr>
+<tr class="even">
+<td>Current <strong>To</strong></td>
+<td>Company</td>
+</tr>
+<tr class="odd">
+<td>New <strong>From</strong> (Lower power)</td>
+<td>Company</td>
+</tr>
+<tr class="even">
+<td>New <strong>To</strong> (Higher power)</td>
+<td>Owner</td>
+</tr>
+<tr class="odd">
+<td>New <strong>subtype</strong></td>
+<td>OwnedBy</td>
+</tr>
+<tr class="even">
+<td>Beneficiary</td>
+<td>1 + 1</td>
+</tr>
+<tr class="odd">
+<td>Decision-maker</td>
+<td>2 + 1</td>
+</tr>
+<tr class="even">
+<td>Influential (on person)</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td><strong>5</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<p>Shareholders may receive proceeds from the profits of the company.</p>
+<p>They have some decision-making power within the company. However, it is the Beneficial Owner that ultimately gets the final say in decisions.</p>
+<table class="table-bordered table-striped caption-top table">
+<caption>Shareholdership</caption>
+<tbody>
+<tr class="odd">
+<td>Current <strong>From</strong></td>
+<td>Shareholder</td>
+</tr>
+<tr class="even">
+<td>Current <strong>To</strong></td>
+<td>Company</td>
+</tr>
+<tr class="odd">
+<td>New <strong>From</strong> (Lower power)</td>
+<td>Company</td>
+</tr>
+<tr class="even">
+<td>New <strong>To</strong> (Higher power)</td>
+<td>Shareholder</td>
+</tr>
+<tr class="odd">
+<td>New <strong>subtype</strong></td>
+<td>HasShareholder</td>
+</tr>
+<tr class="even">
+<td>Beneficiary</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Decision-maker</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>Influential (on person)</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td><strong>3</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
+<p>Employees are contractually obligated to act in the interests of their employer.</p>
+<p>Employers also influence what their employees do in the business.</p>
+<table class="table-bordered table-striped caption-top table">
+<caption>WorksFor</caption>
+<tbody>
+<tr class="odd">
+<td>Current <strong>From</strong></td>
+<td>Owner</td>
+</tr>
+<tr class="even">
+<td>Current <strong>To</strong></td>
+<td>Company</td>
+</tr>
+<tr class="odd">
+<td>New <strong>From</strong> (Lower power)</td>
+<td>Company</td>
+</tr>
+<tr class="even">
+<td>New <strong>To</strong> (Higher power)</td>
+<td>Owner</td>
+</tr>
+<tr class="odd">
+<td>New <strong>subtype</strong></td>
+<td>OwnedBy</td>
+</tr>
+<tr class="even">
+<td>Beneficiary</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Decision-maker</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>Influential (on person)</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tabset-5-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-4-tab">
+<p>As it is impossible to figure out the power dynamics within a family, we will retain direction and assume that the arrow points to the person that benefits more from the relationship.</p>
+<table class="table-bordered table-striped caption-top table">
+<caption>FamilyRelationship</caption>
+<tbody>
+<tr class="odd">
+<td>Current <strong>From</strong></td>
+<td>Person 1</td>
+</tr>
+<tr class="even">
+<td>Current <strong>To</strong></td>
+<td>Person 2</td>
+</tr>
+<tr class="odd">
+<td>New <strong>From</strong> (Lower power)</td>
+<td>Person 1</td>
+</tr>
+<tr class="even">
+<td>New <strong>To</strong> (Higher power)</td>
+<td>Person 2</td>
+</tr>
+<tr class="odd">
+<td>New <strong>subtype</strong></td>
+<td>FamilyRelationship</td>
+</tr>
+<tr class="even">
+<td>Beneficiary</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Decision-maker</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Influential (on person)</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td><strong>2</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Model Revision
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>From the results of visualization in the original <a href="https://isss608-kjcpaas.netlify.app/take-home_exs/ex3/take-home_ex3#table-1">Take-home Exercise 3</a>, the model for the power graph resulted in the influence <code>FamilyRelationship</code> being too strong that it overrode all power held from business activities.</p>
+<p>We revised this to be unidirectional to lessen the impact and we cannot assume that family members have the same sharing dynamic.</p>
+</div>
+</div>
+</section>
+<section id="converting-relationship-edges-to-power-flow" class="level2">
+<h2 class="anchored" data-anchor-id="converting-relationship-edges-to-power-flow">6.4 Converting relationship edges to power flow</h2>
+<p>Using the table above, we will create a function to convert relationship edges to power flow. We will define a function <code>convert_edges_to_power_flow</code> to take care of converting edges to power graph</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code for convert_edges_to_power_flow()</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>convert_edges_to_power_flow <span class="ot">&lt;-</span> <span class="cf">function</span>(edges) {</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Employee -&gt; Employer, weight: 2</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  works_for <span class="ot">&lt;-</span> edges <span class="sc">%&gt;%</span> <span class="fu">filter</span>(subtype <span class="sc">==</span> <span class="st">"WorksFor"</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">weight =</span> <span class="dv">3</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Person1 &lt;-&gt; Person2, weight: 1</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  family <span class="ot">&lt;-</span> edges <span class="sc">%&gt;%</span> <span class="fu">filter</span>(subtype <span class="sc">==</span> <span class="st">"FamilyRelationship"</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">weight =</span> <span class="dv">2</span>)</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Shareholder &lt;- Company, weight: 2</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  shareholder <span class="ot">&lt;-</span> edges <span class="sc">%&gt;%</span> <span class="fu">filter</span>(subtype <span class="sc">==</span> <span class="st">"Shareholdership"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">temp =</span> from,</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">from =</span> to,</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">to =</span> temp,</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">weight =</span> <span class="dv">3</span>,</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Rename to prevent confusion due to reversed arrows</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">subtype =</span> <span class="st">"HasShareholder"</span>,</span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(from, to, supertype, subtype, start_date, end_date, weight, included)</span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># BeneficialOwner &lt;- Company, weight: 3</span></span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>  owner <span class="ot">&lt;-</span> edges <span class="sc">%&gt;%</span> <span class="fu">filter</span>(subtype <span class="sc">==</span> <span class="st">"BeneficialOwnership"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">temp =</span> from,</span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">from =</span> to,</span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">to =</span> temp,</span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>      <span class="at">weight =</span> <span class="dv">5</span>,</span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Rename to prevent confusion due to reversed arrows</span></span>
+<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">subtype =</span> <span class="st">"OwnedBy"</span>,</span>
+<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(from, to, supertype, subtype, start_date, end_date, weight, included)</span>
+<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a>  works_for <span class="sc">%&gt;%</span></span>
+<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rbind</span>(family) <span class="sc">%&gt;%</span></span>
+<span id="cb33-34"><a href="#cb33-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rbind</span>(shareholder) <span class="sc">%&gt;%</span></span>
+<span id="cb33-35"><a href="#cb33-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rbind</span>(owner)</span>
+<span id="cb33-36"><a href="#cb33-36" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Let us check the resulting edges table to see if each edge type has been mapped correctly.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">Relationship</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false">Power</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>supernetwork <span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_data_frame</span>(<span class="at">what =</span> <span class="st">"edges"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(supertype, subtype) <span class="sc">%&gt;%</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>count) <span class="sc">%&gt;%</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">supertype</th>
+<th style="text-align: left;">subtype</th>
+<th style="text-align: right;">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Ownership</td>
+<td style="text-align: left;">Shareholdership</td>
+<td style="text-align: right;">39378</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ownership</td>
+<td style="text-align: left;">BeneficialOwnership</td>
+<td style="text-align: right;">21529</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Employment</td>
+<td style="text-align: left;">WorksFor</td>
+<td style="text-align: right;">14817</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Relationship</td>
+<td style="text-align: left;">FamilyRelationship</td>
+<td style="text-align: right;">91</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>supernetwork <span class="sc">%&gt;%</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_data_frame</span>(<span class="at">what =</span> <span class="st">"edges"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">convert_edges_to_power_flow</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(supertype, subtype) <span class="sc">%&gt;%</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>count) <span class="sc">%&gt;%</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">supertype</th>
+<th style="text-align: left;">subtype</th>
+<th style="text-align: right;">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Ownership</td>
+<td style="text-align: left;">HasShareholder</td>
+<td style="text-align: right;">39378</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ownership</td>
+<td style="text-align: left;">OwnedBy</td>
+<td style="text-align: right;">21529</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Employment</td>
+<td style="text-align: left;">WorksFor</td>
+<td style="text-align: right;">14817</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Relationship</td>
+<td style="text-align: left;">FamilyRelationship</td>
+<td style="text-align: right;">91</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 </div>
 </div>
 

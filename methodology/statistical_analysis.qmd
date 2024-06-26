@@ -1,3 +1,29 @@
 ---
-title: "Statistical Analysis [TODO]"
+title: "Statistical Analysis"
+format: html
+execute: 
+  echo: true
+  eval: true
+  warning: false
+  freeze: true
 ---
+
+# 1 Measures of centrality
+
+We will be using 3 different measures of centrality in the shiny app: degree, pagerank, and betweenness
+
+## 1.1 Degree centrality
+
+We will use this in the **Corporate Structures** modules to identify the most active nodes in the system.
+
+## 1.2 Pagerank centrality
+
+We will use this measure of centrality to identify the **Power Holders**. The principle is that *the more incoming edges a node has, the more influential it is* and nodes to which they are connected share of that influence. ([Disney, 2020](https://cambridge-intelligence.com/eigencentrality-pagerank/))
+
+## 1.3 Betweenness centrality
+
+We will use this measure of centrality to identify the **Power Brokers**.
+
+Power Brokers must be nodes with **both incoming and outgoing edges**, so that they can connect a more powerful node to a less powerful node. Hence, having a large number of edges connected to a node is not enough (which the degree centrality offers).
+
+This is because if a node only has incoming or outgoing edges, it won’t be able to connect to other nodes to keep the flow going.

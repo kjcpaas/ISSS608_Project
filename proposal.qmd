@@ -34,39 +34,54 @@ Each node represents the entities in the fishing business community (including p
 ## Diagram
 
 ```{mermaid}
-flowchart TB
-  A[Data Wrangling]
-  B[Visualizing corporate structures]
-  C[Visualizing temporal changes]
-  D(Extracting subnetworks)
-  E(Extracting network state through time)
-  F[[Identifying influential nodes]]
-  G[[Identifying business transactions]]
-  H[Transforming graph for statistical analysis]
-  I[Calculate measures of centrality]
-  J[Visualizing influential nodes]
+flowchart
+  mc3_json[/in: mc3.json/]
+  sn_rds[/out: supernetwork.rds/]
+  
+  read[Read Input]
+  clean[Clean Data]
+  
+  extract_subnetwork[[Extract subnetwork]]
+  filter_date[[Filter by date]]
+  transform_power[[Transform power graph]]
+  
+  degree[Calculate degree centrality]
+  pagerank[Calculate pagerank centrality]
+  betweenness[Calculate betweenness centrality]
+  
+  plot_corp[Plot corporate structures]
+  plot_network[Plot network graphs]
+  plot_influence[Plot influence]
+  
+  combine[/Combine based on requirement\]
+  
+  clean -- save --> sn_rds
+  mc3_json --> read
   
   subgraph Data Preparation
-    A -.-> D
-    A -.-> E
-  end
-  
-  A --> B
-  D --> B
-  E --> C
-  A --> C
-  F --> H
-  
-  subgraph Data Exploration & Visualization
-    B --> F
-    B --> G
-    C --> G
-    C --> F
+    read --> clean
+    clean -.-> extract_subnetwork
+    clean -.-> filter_date
+    extract_subnetwork --> combine
+    filter_date --> combine
+    combine -.-> transform_power
+    clean -.-> transform_power
   end
   
   subgraph Statistical Analysis
-    H --> I
-    I --> J
+    clean -.-> degree
+    combine -.-> degree
+    transform_power --> pagerank
+    transform_power --> betweenness
+  end
+  
+    
+  subgraph Data Exploration & Visualization
+    degree --> plot_corp
+    pagerank --> plot_influence
+    betweenness --> plot_influence
+    transform_power --> plot_network
+    combine --> plot_network
   end
 ```
 
@@ -79,8 +94,19 @@ flowchart TB
     -   Writing helper functions to generate the following subgraphs for closer analysis
         -   Getting subgraph based on proximity to a given node
         -   Getting the network state, i.e. nodes and edges present at any given time.
+        -   Transforming relationshion graph to power graph for use in calculating influence
 
-2.  **Data Exploration & Visualization:** To identify patterns in the network and derive inferences from them.
+2.  **Statistical Analysis:** To apply statistical methods to help in analysis
+
+    -   Calculate degree centrality to identify most active nodes
+
+    -   Calculate measures of centrality to identify influential nodes
+
+        -   **pagerank centrality** for the nodes that hold the most power over resources in the network (the **power holders**).
+
+        -   **betweenness centrality** for the nodes the broker the power of a powerful node over the less powerful ones.
+
+3.  **Data Exploration & Visualization:** To identify patterns in the network and derive inferences from them.
 
     -   Interactive network graphs to see relationship between entities
 
@@ -93,16 +119,6 @@ flowchart TB
         -   Kinds of business transactions
 
         -   Influential nodes
-
-3.  **Statistical Analysis:** To test and evaluate or hypothesis.
-
-    -   Transform network graph to power graph (as the provided graph may not be suitable for statistical analysis.
-
-    -   Calculate measures of centrality to identify influential nodes
-
-        -   **pagerank centrality** for the nodes that hold the most power over resources in the network (the **power holders**).
-
-        -   **betweenness centrality** for the nodes the broker the power of a powerful node over the less powerful ones.
 :::
 
 # Prototype Sketches

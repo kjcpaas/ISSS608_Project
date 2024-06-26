@@ -11,8 +11,8 @@ website:
       - text: "{{< fa diagram-project >}} Methodology" 
         menu:
         - methodology/data_preparation.qmd
-        - methodology/data_exploration.qmd
         - methodology/statistical_analysis.qmd
+        - methodology/data_exploration.qmd
       - href: findings.qmd
         text: Findings
         icon: journal-text

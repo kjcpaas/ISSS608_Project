@@ -143,12 +143,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Data Preparation</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./methodology/data_exploration.html">
- <span class="dropdown-text">Data Exploration and Visualization</span></a>
+    <a class="dropdown-item" href="./methodology/statistical_analysis.html">
+ <span class="dropdown-text">Statistical Analysis</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./methodology/statistical_analysis.html">
- <span class="dropdown-text">Statistical Analysis [TODO]</span></a>
+    <a class="dropdown-item" href="./methodology/data_exploration.html">
+ <span class="dropdown-text">Data Exploration and Visualization</span></a>
   </li>  
     </ul>
   </li>
@@ -282,39 +282,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
-<pre class="mermaid mermaid-js">flowchart TB
-  A[Data Wrangling]
-  B[Visualizing corporate structures]
-  C[Visualizing temporal changes]
-  D(Extracting subnetworks)
-  E(Extracting network state through time)
-  F[[Identifying influential nodes]]
-  G[[Identifying business transactions]]
-  H[Transforming graph for statistical analysis]
-  I[Calculate measures of centrality]
-  J[Visualizing influential nodes]
+<pre class="mermaid mermaid-js">flowchart
+  mc3_json[/in: mc3.json/]
+  sn_rds[/out: supernetwork.rds/]
+  
+  read[Read Input]
+  clean[Clean Data]
+  
+  extract_subnetwork[[Extract subnetwork]]
+  filter_date[[Filter by date]]
+  transform_power[[Transform power graph]]
+  
+  degree[Calculate degree centrality]
+  pagerank[Calculate pagerank centrality]
+  betweenness[Calculate betweenness centrality]
+  
+  plot_corp[Plot corporate structures]
+  plot_network[Plot network graphs]
+  plot_influence[Plot influence]
+  
+  combine[/Combine based on requirement\]
+  
+  clean -- save --&gt; sn_rds
+  mc3_json --&gt; read
   
   subgraph Data Preparation
-    A -.-&gt; D
-    A -.-&gt; E
-  end
-  
-  A --&gt; B
-  D --&gt; B
-  E --&gt; C
-  A --&gt; C
-  F --&gt; H
-  
-  subgraph Data Exploration &amp; Visualization
-    B --&gt; F
-    B --&gt; G
-    C --&gt; G
-    C --&gt; F
+    read --&gt; clean
+    clean -.-&gt; extract_subnetwork
+    clean -.-&gt; filter_date
+    extract_subnetwork --&gt; combine
+    filter_date --&gt; combine
+    combine -.-&gt; transform_power
+    clean -.-&gt; transform_power
   end
   
   subgraph Statistical Analysis
-    H --&gt; I
-    I --&gt; J
+    clean -.-&gt; degree
+    combine -.-&gt; degree
+    transform_power --&gt; pagerank
+    transform_power --&gt; betweenness
+  end
+  
+    
+  subgraph Data Exploration &amp; Visualization
+    degree --&gt; plot_corp
+    pagerank --&gt; plot_influence
+    betweenness --&gt; plot_influence
+    transform_power --&gt; plot_network
+    combine --&gt; plot_network
   end
 </pre>
 </div>
@@ -333,6 +348,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Getting subgraph based on proximity to a given node</li>
 <li>Getting the network state, i.e.&nbsp;nodes and edges present at any given time.</li>
+<li>Transforming relationshion graph to power graph for use in calculating influence</li>
+</ul></li>
+</ul></li>
+<li><p><strong>Statistical Analysis:</strong> To apply statistical methods to help in analysis</p>
+<ul>
+<li><p>Calculate degree centrality to identify most active nodes</p></li>
+<li><p>Calculate measures of centrality to identify influential nodes</p>
+<ul>
+<li><p><strong>pagerank centrality</strong> for the nodes that hold the most power over resources in the network (the <strong>power holders</strong>).</p></li>
+<li><p><strong>betweenness centrality</strong> for the nodes the broker the power of a powerful node over the less powerful ones.</p></li>
 </ul></li>
 </ul></li>
 <li><p><strong>Data Exploration &amp; Visualization:</strong> To identify patterns in the network and derive inferences from them.</p>
@@ -346,15 +371,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><p>Kinds of business transactions</p></li>
 <li><p>Influential nodes</p></li>
-</ul></li>
-</ul></li>
-<li><p><strong>Statistical Analysis:</strong> To test and evaluate or hypothesis.</p>
-<ul>
-<li><p>Transform network graph to power graph (as the provided graph may not be suitable for statistical analysis.</p></li>
-<li><p>Calculate measures of centrality to identify influential nodes</p>
-<ul>
-<li><p><strong>pagerank centrality</strong> for the nodes that hold the most power over resources in the network (the <strong>power holders</strong>).</p></li>
-<li><p><strong>betweenness centrality</strong> for the nodes the broker the power of a powerful node over the less powerful ones.</p></li>
 </ul></li>
 </ul></li>
 </ol>
