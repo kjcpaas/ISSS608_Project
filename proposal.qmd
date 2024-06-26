@@ -151,6 +151,38 @@ flowchart
 
 # R Packages
 
+We used the following R packages
+
+::: panel-tabset
+## Utility
+
+-   [jsonlite](https://cran.r-project.org/web/packages/jsonlite/index.html) - To parse JSON
+
+-   [tidyverse](https://www.tidyverse.org/) - Data science tools
+
+-   [ggtext](https://cran.r-project.org/web/packages/ggtext/index.html) - Tools for text formatting
+
+## Plotting 
+
+-   [ggraph](https://ggraph.data-imaginist.com/) - For plotting network data
+
+-   [tidygraph](https://cran.r-project.org/web/packages/tidygraph/index.html) - For graph manipulations
+
+-   [igraph](https://cran.r-project.org/web/packages/igraph/index.html) - Contains functions for network analysis
+
+-   [ggiraph](https://cran.r-project.org/web/packages/ggiraph/index.html) - Interactive plots
+
+-   [scales](https://scales.r-lib.org/) - Formatting ggplot scale
+
+## Shiny App
+
+-   [shiny](https://shiny.posit.co/) - Creating interactive apps in R
+
+-   [shinywidgets](https://shinyapps.dreamrs.fr/shinyWidgets/) - Extensions of shiny inputs
+
+-   [shinyjs](https://deanattali.com/shinyjs/) - Executing JS code in shiny
+:::
+
 -   [tidyverse](https://www.tidyverse.org/): A collection of R packages used in data science, which includes [ggplot2](https://ggplot2.tidyverse.org/), [tibble](https://tibble.tidyverse.org/), [readr](https://readr.tidyverse.org/)
 -   [vistime](https://github.com/shosaco/vistime): For visualizing timelines
 -   [ggraph](https://ggraph.data-imaginist.com/): Extension of `ggplot2` for plotting relational data
