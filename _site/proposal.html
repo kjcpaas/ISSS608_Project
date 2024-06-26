@@ -300,8 +300,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   plot_corp[Plot corporate structures]
   plot_network[Plot network graphs]
   plot_influence[Plot influence]
+  shiny[Shiny App]
   
-  combine[/Combine based on requirement\]
+  combine_data[/Combine based on requirement\]
+  combine_plots[/Combine plots\]
   
   clean -- save --&gt; sn_rds
   mc3_json --&gt; read
@@ -310,15 +312,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     read --&gt; clean
     clean -.-&gt; extract_subnetwork
     clean -.-&gt; filter_date
-    extract_subnetwork --&gt; combine
+    extract_subnetwork --&gt; combine_data
     filter_date --&gt; combine
-    combine -.-&gt; transform_power
+    combine_data -.-&gt; transform_power
     clean -.-&gt; transform_power
   end
   
   subgraph Statistical Analysis
     clean -.-&gt; degree
-    combine -.-&gt; degree
+    combine_data -.-&gt; degree
     transform_power --&gt; pagerank
     transform_power --&gt; betweenness
   end
@@ -329,7 +331,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     pagerank --&gt; plot_influence
     betweenness --&gt; plot_influence
     transform_power --&gt; plot_network
-    combine --&gt; plot_network
+    combine_data --&gt; plot_network
+    plot_corp --&gt; combine_plots
+    plot_network --&gt; combine_plots
+    plot_influence --&gt; combine_plots
+    combine_plots --&gt; shiny_app
   end
 </pre>
 </div>

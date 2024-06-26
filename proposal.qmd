@@ -52,8 +52,10 @@ flowchart
   plot_corp[Plot corporate structures]
   plot_network[Plot network graphs]
   plot_influence[Plot influence]
+  shiny[Shiny App]
   
-  combine[/Combine based on requirement\]
+  combine_data[/Combine based on requirement\]
+  combine_plots[/Combine plots\]
   
   clean -- save --> sn_rds
   mc3_json --> read
@@ -62,15 +64,15 @@ flowchart
     read --> clean
     clean -.-> extract_subnetwork
     clean -.-> filter_date
-    extract_subnetwork --> combine
+    extract_subnetwork --> combine_data
     filter_date --> combine
-    combine -.-> transform_power
+    combine_data -.-> transform_power
     clean -.-> transform_power
   end
   
   subgraph Statistical Analysis
     clean -.-> degree
-    combine -.-> degree
+    combine_data -.-> degree
     transform_power --> pagerank
     transform_power --> betweenness
   end
@@ -81,7 +83,11 @@ flowchart
     pagerank --> plot_influence
     betweenness --> plot_influence
     transform_power --> plot_network
-    combine --> plot_network
+    combine_data --> plot_network
+    plot_corp --> combine_plots
+    plot_network --> combine_plots
+    plot_influence --> combine_plots
+    combine_plots --> shiny_app
   end
 ```
 
