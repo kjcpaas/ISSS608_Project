@@ -7,20 +7,23 @@ website:
     left:
       - href: proposal.qmd
         text: Proposal [WIP]
-      - text: Methodology [TODO]
+      - text: Methodology
         menu:
         - methodology/data_preparation.qmd
         - methodology/data_exploration.qmd
         - methodology/statistical_analysis.qmd
       - href: findings.qmd
-        text: Findings [TODO]
+        text: Findings
+        icon: journal-text
       - href: poster.qmd
-        text: Poster [TODO]
+        text: "{{< fa file-powerpoint >}} Poster"
       - href: meeting_minutes.qmd
         text: Meeting Minutes
-      - about.qmd
+        icon: archive
     right:
-      - text: Shiny App
+      - href: about.qmd
+        text: "{{< fa people-group >}} The Team"
+      - text: "{{< fa laptop-code >}} Shiny App"
         menu:
         - href: user_guide.qmd
           text: User Guide [TODO]
@@ -43,4 +46,3 @@ format:
     toc: true
 
 editor: visual
-

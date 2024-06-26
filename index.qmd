@@ -1,5 +1,5 @@
 ---
-title: "The Big Fish: Catching Illegal Fishers Using Visual Analytics"
+title: "The Big Fish: Catching Illegal Fishing Through Visual Analytics"
 ---
 
 ![](images/bigfish_hero.png){fig-align="center" width="438"}

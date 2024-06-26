@@ -176,7 +176,7 @@ To better see patterns in the network, we need to visualize it.
 
 ## 3.1 Plotting Function
 
-We will use the function below to visualize the business relationships within the network:
+We will use the function `plot_fishing_relationships()` to visualize the business relationships within the network:
 
 ```{r}
 #| code-fold: true
@@ -246,7 +246,7 @@ COMMON_THEME = theme(
 
 ```{r}
 #| code-fold: true
-#| code-summary: "Show code for plot_fishing_relationships"
+#| code-summary: "Show code for plot_fishing_relationships()"
 
 plot_fishing_relationships <- function(graph,
                                        # Name of nodes to emphasize
