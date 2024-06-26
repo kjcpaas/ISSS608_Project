@@ -7,7 +7,8 @@ website:
     left:
       - href: proposal.qmd
         text: Proposal [WIP]
-      - text: Methodology
+        icon: files
+      - text: "{{< fa diagram-project >}} Methodology" 
         menu:
         - methodology/data_preparation.qmd
         - methodology/data_exploration.qmd
