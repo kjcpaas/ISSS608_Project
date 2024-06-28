@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.555">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -81,13 +81,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -96,12 +90,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
+
 <link href="../site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
 <script src="../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="../site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
@@ -128,9 +122,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container mx-auto">
+      <div class="navbar-brand-container">
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title"><i class="fa-solid fa-fish-fins" aria-label="fish-fins"></i> The Big Fish</span>
     </a>
@@ -142,85 +136,85 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../proposal.html"> <i class="bi bi-files" role="img">
+    <a class="nav-link" href="../proposal.html" rel="" target=""><i class="bi bi-files" role="img">
 </i> 
-<span class="menu-text">Proposal [WIP]</span></a>
+ <span class="menu-text">Proposal</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-fa-diagram-project--methodology" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-fa-diagram-project--methodology" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text"><i class="fa-solid fa-diagram-project" aria-label="diagram-project"></i> Methodology</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-fa-diagram-project--methodology">    
         <li>
-    <a class="dropdown-item" href="../methodology/data_preparation.html">
+    <a class="dropdown-item" href="../methodology/data_preparation.html" rel="" target="">
  <span class="dropdown-text">Data Preparation</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../methodology/statistical_analysis.html">
+    <a class="dropdown-item" href="../methodology/statistical_analysis.html" rel="" target="">
  <span class="dropdown-text">Statistical Analysis</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../methodology/data_exploration.html">
+    <a class="dropdown-item" href="../methodology/data_exploration.html" rel="" target="">
  <span class="dropdown-text">Data Exploration and Visualization</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../findings.html"> <i class="bi bi-journal-text" role="img">
+    <a class="nav-link" href="../findings.html" rel="" target=""><i class="bi bi-journal-text" role="img">
 </i> 
-<span class="menu-text">Findings</span></a>
+ <span class="menu-text">Findings</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../poster.html"> 
-<span class="menu-text"><i class="fa-solid fa-file-powerpoint" aria-label="file-powerpoint"></i> Poster</span></a>
+    <a class="nav-link" href="../poster.html" rel="" target="">
+ <span class="menu-text"><i class="fa-solid fa-file-powerpoint" aria-label="file-powerpoint"></i> Poster</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../meeting_minutes.html"> <i class="bi bi-archive" role="img">
+    <a class="nav-link" href="../meeting_minutes.html" rel="" target=""><i class="bi bi-archive" role="img">
 </i> 
-<span class="menu-text">Meeting Minutes</span></a>
+ <span class="menu-text">Meeting Minutes</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../about.html"> 
-<span class="menu-text"><i class="fa-solid fa-people-group" aria-label="people-group"></i> The Team</span></a>
+    <a class="nav-link" href="../about.html" rel="" target="">
+ <span class="menu-text"><i class="fa-solid fa-people-group" aria-label="people-group"></i> The Team</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-fa-laptop-code--shiny-app" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-fa-laptop-code--shiny-app" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text"><i class="fa-solid fa-laptop-code" aria-label="laptop-code"></i> Shiny App</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-fa-laptop-code--shiny-app">    
         <li>
-    <a class="dropdown-item" href="../user_guide.html">
- <span class="dropdown-text">User Guide [TODO]</span></a>
+    <a class="dropdown-item" href="../user_guide.html" rel="" target="">
+ <span class="dropdown-text">User Guide</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://kjcpaas.shinyapps.io/isss608-202324g4/" target="_blank">
+    <a class="dropdown-item" href="https://kjcpaas.shinyapps.io/isss608-202324g4/" rel="" target="_blank">
  <span class="dropdown-text">Shiny App</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-github" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-github" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
       <i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text">Github</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-github">    
         <li>
-    <a class="dropdown-item" href="https://github.com/kjcpaas/ISSS608_Project" target="_blank">
+    <a class="dropdown-item" href="https://github.com/kjcpaas/ISSS608_Project" rel="" target="_blank">
  <span class="dropdown-text">Project Site</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://github.com/kjcpaas/ISSS608_Project_Shiny" target="_blank">
+    <a class="dropdown-item" href="https://github.com/kjcpaas/ISSS608_Project_Shiny" rel="" target="_blank">
  <span class="dropdown-text">Shiny App</span></a>
   </li>  
     </ul>
   </li>
 </ul>
-          </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
+          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -277,9 +271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
-
 </header>
-
 
 <p>In this part we will visualize the network and look for temporal and structural patterns.</p>
 <p>We will use the inferences we make to create the Shiny App.</p>
@@ -367,7 +359,7 @@ Package List
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <p>We will prioritize our investigation by activity. In order to do this, we need to identify the years with the most number of transactions for the network.</p>
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sec_edges <span class="ot">&lt;-</span> sec_network <span class="sc">%&gt;%</span> <span class="fu">as_data_frame</span>(<span class="at">what=</span><span class="st">"edges"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -407,11 +399,7 @@ Package List
 <span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_exploration_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_exploration_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p><strong>2035</strong> is the year that has the most transactions. Let examine this year more closely.</p>
@@ -439,6 +427,7 @@ Double counting
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(start_date) <span class="sc">%&gt;%</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datatable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
+
 <div class="datatables html-widget html-fill-item" id="htmlwidget-ed4c3e5e0d48c2f30dfb" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-ed4c3e5e0d48c2f30dfb">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9"],["Liam Conti","StichtingMarine Shipping Company","AguaLeska Transit N.V.","Namorna Transit Ltd","StichtingMarine Shipping Company","Elise Hauser","V. Miesel Shipping","Tainamarine Fishing Co","Liam Conti"],["AguaLeska Transit N.V.","AguaLeska Transit N.V.","SouthSeafood Express Corp","V. Miesel Shipping","Namorna Transit Ltd","V. Miesel Shipping","Tainamarine Fishing Co","SouthSeafood Express Corp","StichtingMarine Shipping Company"],["Shareholdership","Shareholdership","Shareholdership","Shareholdership","Shareholdership","WorksFor","Shareholdership","Shareholdership","Shareholdership"],["2028-06-10","2029-08-17","2033-10-29","2035-05-18","2035-05-18","2035-05-18","2035-05-20","2035-05-25","2035-06-10"],["2035-05-15","2035-06-02","2035-05-25",null,null,null,null,null,null]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>from<\/th>\n      <th>to<\/th>\n      <th>subtype<\/th>\n      <th>start_date<\/th>\n      <th>end_date<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"from","targets":1},{"name":"to","targets":2},{"name":"subtype","targets":3},{"name":"start_date","targets":4},{"name":"end_date","targets":5}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
@@ -472,7 +461,7 @@ Findings
 <h2 class="anchored" data-anchor-id="plotting-function">3.1 Plotting Function</h2>
 <p>We will use the function <code>plot_fishing_relationships()</code> to visualize the business relationships within the network:</p>
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Show MAPPINGS</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>MAPPINGS <span class="ot">=</span> <span class="fu">list</span>(</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Available shapes: https://www.datanovia.com/en/blog/ggplot-point-shapes-best-tips/</span></span>
@@ -509,7 +498,7 @@ Findings
 </details>
 </div>
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Show COMMON_THEME</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>COMMON_THEME <span class="ot">=</span> <span class="fu">theme</span>(</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Roboto Condensed"</span>, <span class="at">color =</span> <span class="st">"grey50"</span>),</span>
@@ -543,7 +532,7 @@ Findings
 </details>
 </div>
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Show code for plot_fishing_relationships()</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plot_fishing_relationships <span class="ot">&lt;-</span> <span class="cf">function</span>(graph,</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                                       <span class="co"># Name of nodes to emphasize</span></span>
@@ -667,7 +656,7 @@ Findings
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sec_network <span class="sc">%&gt;%</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_network_snapshot</span>(<span class="st">"2034-12-31"</span>) <span class="sc">%&gt;%</span></span>
@@ -685,7 +674,7 @@ Findings
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sec_network <span class="sc">%&gt;%</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_network_snapshot</span>(<span class="st">"2036-01-01"</span>) <span class="sc">%&gt;%</span></span>
@@ -726,7 +715,7 @@ Findings
 <div class="tab-content">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>supernetwork <span class="sc">%&gt;%</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_subnetwork</span>(<span class="st">"SouthSeafood Express Corp"</span>) <span class="sc">%&gt;%</span></span>
@@ -755,7 +744,7 @@ Findings
 </div>
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>supernetwork <span class="sc">%&gt;%</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_subnetwork</span>(<span class="st">"SouthSeafood Express Corp"</span>) <span class="sc">%&gt;%</span></span>
@@ -831,7 +820,7 @@ Findings
 <span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>nodes_influence_before <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(name) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>name) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
+<table class="table table-sm table-striped small">
 <colgroup>
 <col style="width: 13%">
 <col style="width: 1%">
@@ -1287,7 +1276,7 @@ Findings
 <span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>nodes_influence_after <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(name) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>name) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
+<table class="table table-sm table-striped small">
 <colgroup>
 <col style="width: 13%">
 <col style="width: 1%">
@@ -1763,7 +1752,7 @@ Findings
 <h2 class="anchored" data-anchor-id="plotting-function-1">4.2 Plotting function</h2>
 <p>We will use the function <code>plot_centrality()</code> to visualize the influence within the network:</p>
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Show code for plot_centrality()</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>plot_centrality <span class="ot">&lt;-</span> <span class="cf">function</span>(graph,</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># Column containing centrality measure, can be</span></span>
@@ -1916,7 +1905,7 @@ Findings
 <div class="tab-content">
 <div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>sec_influence_before <span class="sc">%&gt;%</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_centrality</span>(</span>
@@ -1933,7 +1922,7 @@ Findings
 </div>
 <p><strong>Nodes List</strong></p>
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>sec_influence_before <span class="sc">%&gt;%</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_data_frame</span>(<span class="at">what =</span> <span class="st">"vertices"</span>) <span class="sc">%&gt;%</span></span>
@@ -1944,6 +1933,7 @@ Findings
 <span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datatable</span>(<span class="at">rownames =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
+
 <div class="datatables html-widget html-fill-item" id="htmlwidget-1b03e496ada1173893ff" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-1b03e496ada1173893ff">{"x":{"filter":"none","vertical":false,"data":[["Lemuel Conti","Fabio Conti","NamRiver Transit A/S","GvardeyskAmerica Shipping Plc","Nathan Conti","Fintan Park","4. SeaCargo Ges.m.b.H.","KisumuSeafoodBrothers Ltd","NyanzaRiver Worldwide AS","Dry CreekRybachit Marine A/S","Liam Conti","OranjestadCreek Express Sagl","SouthLeska Worldwide AS","ArawakFish Cargo Ges.m.b.H.","KambalaSea Freight Inc","StichtingMarine Shipping Company","SavanetaCreek Solutions NV","James Bell","AguaLeska Transit N.V.","Harvey Janus","Oka Seafood Shipping Ges.m.b.H.","HomabayMarine Carriers N.V.","Rafael Sanchez","9. RiverLine CJSC","The News Buoy","BaringoAmerica Marine Ges.m.b.H.","Dry CreekWorldLogistics Ltd. Liability Co","FlounderLeska Marine BV","Maacama Ocean Worldwide LLC","Oka Charter Boat Transport OJSC","RechFish Freight Plc","SamakaDredgeTransport OJSC","ScaniaSeafood Holdings Ltd. Liability Co","SouthSeafood Express Corp","SumacAmerica Transport GmbH &amp; Co. KG","WestRiver Shipping KgaA","Samuel Conti","Lena Conti-Park","Nadia Conti","Sanaa El-Amin","Eun-Ji Park"],["Person","Person","LogisticsCompany","Company","Person","Person","LogisticsCompany","FishingCompany","FishingCompany","FishingCompany","Person","Company","FishingCompany","Company","Company","FishingCompany","LogisticsCompany","Person","FishingCompany","Person","FishingCompany","Company","Person","Company","NewsCompany","FishingCompany","LogisticsCompany","FishingCompany","FishingCompany","Company","LogisticsCompany","Company","FishingCompany","FishingCompany","LogisticsCompany","Company","Person","Person","Person","Person","Person"],[0.096,0.07099999999999999,0.061,0.059,0.053,0.044,0.04,0.036,0.034,0.033,0.03,0.029,0.025,0.022,0.022,0.021,0.02,0.02,0.02,0.017,0.016,0.016,0.016,0.014,0.011,0.011,0.011,0.011,0.011,0.011,0.011,0.011,0.011,0.011,0.011,0.011,0.011,0.011,0.011,0.011,0.011]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>name<\/th>\n      <th>subtype<\/th>\n      <th>pagerank<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":2},{"name":"name","targets":0},{"name":"subtype","targets":1},{"name":"pagerank","targets":2}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
@@ -1951,7 +1941,7 @@ Findings
 </div>
 <div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>sec_influence_after <span class="sc">%&gt;%</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_centrality</span>(</span>
@@ -1968,7 +1958,7 @@ Findings
 </div>
 <p><strong>Nodes List</strong></p>
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>sec_influence_after <span class="sc">%&gt;%</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_data_frame</span>(<span class="at">what =</span> <span class="st">"vertices"</span>) <span class="sc">%&gt;%</span></span>
@@ -1979,6 +1969,7 @@ Findings
 <span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datatable</span>(<span class="at">rownames =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
+
 <div class="datatables html-widget html-fill-item" id="htmlwidget-7807a5becaa453386aa9" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-7807a5becaa453386aa9">{"x":{"filter":"none","vertical":false,"data":[["Lemuel Conti","Fabio Conti","NamRiver Transit A/S","GvardeyskAmerica Shipping Plc","Nathan Conti","Fintan Park","StichtingMarine Shipping Company","Namorna Transit Ltd","4. SeaCargo Ges.m.b.H.","V. Miesel Shipping","NyanzaRiver Worldwide AS","KisumuSeafoodBrothers Ltd","Liam Conti","Dry CreekRybachit Marine A/S","OranjestadCreek Express Sagl","SouthLeska Worldwide AS","SavanetaCreek Solutions NV","ArawakFish Cargo Ges.m.b.H.","KambalaSea Freight Inc","Tainamarine Fishing Co","Harvey Janus","James Bell","Oka Seafood Shipping Ges.m.b.H.","Rafael Sanchez","HomabayMarine Carriers N.V.","9. RiverLine CJSC","Samuel Conti","The News Buoy","BaringoAmerica Marine Ges.m.b.H.","Dry CreekWorldLogistics Ltd. Liability Co","FlounderLeska Marine BV","Maacama Ocean Worldwide LLC","Oka Charter Boat Transport OJSC","RechFish Freight Plc","SamakaDredgeTransport OJSC","ScaniaSeafood Holdings Ltd. Liability Co","SouthSeafood Express Corp","SumacAmerica Transport GmbH &amp; Co. KG","WestRiver Shipping KgaA","Lena Conti-Park","Nadia Conti","Sanaa El-Amin","Eun-Ji Park","Elise Hauser"],["Person","Person","LogisticsCompany","Company","Person","Person","FishingCompany","Company","LogisticsCompany","Company","FishingCompany","FishingCompany","Person","FishingCompany","Company","FishingCompany","LogisticsCompany","Company","Company","FishingCompany","Person","Person","FishingCompany","Person","Company","Company","Person","NewsCompany","FishingCompany","LogisticsCompany","FishingCompany","FishingCompany","Company","LogisticsCompany","Company","FishingCompany","FishingCompany","LogisticsCompany","Company","Person","Person","Person","Person","Person"],[0.08400000000000001,0.064,0.053,0.052,0.048,0.045,0.043,0.037,0.035,0.033,0.031,0.031,0.031,0.028,0.026,0.023,0.021,0.019,0.019,0.018,0.015,0.015,0.014,0.014,0.013,0.013,0.013,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>name<\/th>\n      <th>subtype<\/th>\n      <th>pagerank<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":2},{"name":"name","targets":0},{"name":"subtype","targets":1},{"name":"pagerank","targets":2}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
@@ -2009,7 +2000,7 @@ Findings
 <div class="tab-content">
 <div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>sec_influence_before <span class="sc">%&gt;%</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_centrality</span>(</span>
@@ -2026,7 +2017,7 @@ Findings
 </div>
 <p><strong>Nodes List</strong></p>
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>sec_influence_before <span class="sc">%&gt;%</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_data_frame</span>(<span class="at">what =</span> <span class="st">"vertices"</span>) <span class="sc">%&gt;%</span></span>
@@ -2037,6 +2028,7 @@ Findings
 <span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datatable</span>(<span class="at">rownames =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
+
 <div class="datatables html-widget html-fill-item" id="htmlwidget-de324ade4a284768b8c4" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-de324ade4a284768b8c4">{"x":{"filter":"none","vertical":false,"data":[["GvardeyskAmerica Shipping Plc","NamRiver Transit A/S","StichtingMarine Shipping Company","KisumuSeafoodBrothers Ltd","OranjestadCreek Express Sagl","Dry CreekRybachit Marine A/S","ArawakFish Cargo Ges.m.b.H.","SavanetaCreek Solutions NV","AguaLeska Transit N.V.","HomabayMarine Carriers N.V.","KambalaSea Freight Inc","4. SeaCargo Ges.m.b.H.","Oka Seafood Shipping Ges.m.b.H.","9. RiverLine CJSC","NyanzaRiver Worldwide AS","SouthLeska Worldwide AS","The News Buoy","James Bell","BaringoAmerica Marine Ges.m.b.H.","Dry CreekWorldLogistics Ltd. Liability Co","FlounderLeska Marine BV","Maacama Ocean Worldwide LLC","Oka Charter Boat Transport OJSC","RechFish Freight Plc","SamakaDredgeTransport OJSC","ScaniaSeafood Holdings Ltd. Liability Co","SouthSeafood Express Corp","SumacAmerica Transport GmbH &amp; Co. KG","WestRiver Shipping KgaA","Fabio Conti","Lemuel Conti","Samuel Conti","Lena Conti-Park","Nathan Conti","Liam Conti","Nadia Conti","Fintan Park","Rafael Sanchez","Sanaa El-Amin","Eun-Ji Park","Harvey Janus"],["Company","LogisticsCompany","FishingCompany","FishingCompany","Company","FishingCompany","Company","LogisticsCompany","FishingCompany","Company","Company","LogisticsCompany","FishingCompany","Company","FishingCompany","FishingCompany","NewsCompany","Person","FishingCompany","LogisticsCompany","FishingCompany","FishingCompany","Company","LogisticsCompany","Company","FishingCompany","FishingCompany","LogisticsCompany","Company","Person","Person","Person","Person","Person","Person","Person","Person","Person","Person","Person","Person"],[0.019,0.018,0.006,0.006,0.005,0.004,0.004,0.004,0.003,0.003,0.003,0.002,0.002,0.001,0.001,0.001,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>name<\/th>\n      <th>subtype<\/th>\n      <th>betweenness<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":2},{"name":"name","targets":0},{"name":"subtype","targets":1},{"name":"betweenness","targets":2}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
@@ -2044,7 +2036,7 @@ Findings
 </div>
 <div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>sec_influence_after <span class="sc">%&gt;%</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_centrality</span>(</span>
@@ -2061,7 +2053,7 @@ Findings
 </div>
 <p><strong>Nodes List</strong></p>
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>sec_influence_after <span class="sc">%&gt;%</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_data_frame</span>(<span class="at">what =</span> <span class="st">"vertices"</span>) <span class="sc">%&gt;%</span></span>
@@ -2072,6 +2064,7 @@ Findings
 <span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datatable</span>(<span class="at">rownames =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
+
 <div class="datatables html-widget html-fill-item" id="htmlwidget-5338262836552a4d2565" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-5338262836552a4d2565">{"x":{"filter":"none","vertical":false,"data":[["GvardeyskAmerica Shipping Plc","NamRiver Transit A/S","StichtingMarine Shipping Company","Namorna Transit Ltd","V. Miesel Shipping","KisumuSeafoodBrothers Ltd","SavanetaCreek Solutions NV","OranjestadCreek Express Sagl","Dry CreekRybachit Marine A/S","Tainamarine Fishing Co","ArawakFish Cargo Ges.m.b.H.","HomabayMarine Carriers N.V.","KambalaSea Freight Inc","Samuel Conti","4. SeaCargo Ges.m.b.H.","Oka Seafood Shipping Ges.m.b.H.","9. RiverLine CJSC","NyanzaRiver Worldwide AS","SouthLeska Worldwide AS","The News Buoy","James Bell","BaringoAmerica Marine Ges.m.b.H.","Dry CreekWorldLogistics Ltd. Liability Co","FlounderLeska Marine BV","Maacama Ocean Worldwide LLC","Oka Charter Boat Transport OJSC","RechFish Freight Plc","SamakaDredgeTransport OJSC","ScaniaSeafood Holdings Ltd. Liability Co","SouthSeafood Express Corp","SumacAmerica Transport GmbH &amp; Co. KG","WestRiver Shipping KgaA","Fabio Conti","Lemuel Conti","Lena Conti-Park","Nathan Conti","Liam Conti","Nadia Conti","Fintan Park","Rafael Sanchez","Sanaa El-Amin","Eun-Ji Park","Elise Hauser","Harvey Janus"],["Company","LogisticsCompany","FishingCompany","Company","Company","FishingCompany","LogisticsCompany","Company","FishingCompany","FishingCompany","Company","Company","Company","Person","LogisticsCompany","FishingCompany","Company","FishingCompany","FishingCompany","NewsCompany","Person","FishingCompany","LogisticsCompany","FishingCompany","FishingCompany","Company","LogisticsCompany","Company","FishingCompany","FishingCompany","LogisticsCompany","Company","Person","Person","Person","Person","Person","Person","Person","Person","Person","Person","Person","Person"],[0.017,0.016,0.013,0.011,0.01,0.005,0.005,0.004,0.004,0.004,0.003,0.002,0.002,0.002,0.002,0.002,0.001,0.001,0.001,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>name<\/th>\n      <th>subtype<\/th>\n      <th>betweenness<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":2},{"name":"name","targets":0},{"name":"subtype","targets":1},{"name":"betweenness","targets":2}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
@@ -2177,27 +2170,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -2207,17 +2183,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -2229,130 +2196,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
+      return note.innerHTML;
     });
   }
       let selectedAnnoteEl;
@@ -2396,7 +2240,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -2422,32 +2265,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -2508,7 +2325,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-
 
 
 

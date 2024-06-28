@@ -6,7 +6,7 @@ title: "Findings"
 
 ## 1.1 Typical transactions from an investor usually involves only one industry.
 
-![](images/investor1-01.png)![](images/investor2-01.png)
+![](images/1b.png)![](images/1a.png)
 
 In the given examples, Tonya demonstrates a strategic focus on investing in companies associated with engines, while Johnny directs his investments towards the seafood industry. This distinction underscores a prevalent pattern where investors often gravitate towards sectors they possess familiarity with, leveraging their knowledge and insights for informed decision-making in their investment strategies.
 
@@ -14,15 +14,13 @@ Conversely, investing completely unrelated industries may be perceived as unconv
 
 ## 1.2 Downs Group attract an unusually high number of investors, which raises suspicions.
 
-![](images/clipboard-72079703.png)
+![](images/2.png)
 
 While most companies attract fewer than 10 new investors per year, Downs Group attracted 120 shareholders in 2034. This raises suspicion, as investors typically exercise caution when investing in new companies. Such a significant surge in shareholder interest prompt questions about what factors might have contributed to this rapid increase in investor confidence towards Downs Group.
 
 ## 1.3 The top 22 investors are investing in similar companies and collectively hold significant stakes in them.
 
-![](images/person2.png)![](images/person1.png)
-
-![](images/circle.png)
+![](images/3b.png)![](images/3a.png)![](images/3c.png)
 
 The companies chosen by the top investors exhibit striking similarities. Upon examining image 3, it becomes evident that these investors not only target the same companies but also exert considerable influence due to the minimal presence of external shareholders or owners. This scenario suggests that a small, influential group of investors holds significant control over these companies.
 
@@ -30,7 +28,7 @@ While these companies are not directly interconnected, they are intricately tied
 
 ## 1.4 Some companies are interconnected and controlled by a single individual.
 
-![](images/isla.png)
+![](images/4.png)
 
 In this scenario, Isla is the beneficial owner of all the interconnected companies. It clearly indicates that she holds a significant and influential investment stake across these enterprises. By maintaining such extensive ownership, Isla likely exerts substantial control over the strategic and operational decisions of these companies, steering their direction and shaping their market behavior. This level of concentrated ownership underscores her role as a major investor, highlighting her pivotal influence within this network of businesses.
 
@@ -48,7 +46,7 @@ In this scenario, Isla is the beneficial owner of all the interconnected compani
 
 NGOs and news companies generally have conflict of interest with other business as they must be impartial and not be influenced by other companies' business interests.
 
-All, except one (see [2.3.1 Acquiring control of The News Buoy]), of these entities operate independently and activities only involve founding, employee hiring, involvement of another independent shareholder.
+All, except one (see \[2.3.1 Acquiring control of The News Buoy\]), of these entities operate independently and activities only involve founding, employee hiring, involvement of another independent shareholder.
 
 This suggests that NGOs and news companies are generally free of influence and can maintain their impartiality.
 

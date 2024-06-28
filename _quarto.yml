@@ -6,7 +6,7 @@ website:
   navbar:
     left:
       - href: proposal.qmd
-        text: Proposal [WIP]
+        text: Proposal
         icon: files
       - text: "{{< fa diagram-project >}} Methodology" 
         menu:
@@ -27,7 +27,7 @@ website:
       - text: "{{< fa laptop-code >}} Shiny App"
         menu:
         - href: user_guide.qmd
-          text: User Guide [TODO]
+          text: User Guide
         - href: "https://kjcpaas.shinyapps.io/isss608-202324g4/"
           text: Shiny App
           target: _blank
