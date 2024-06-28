@@ -2,6 +2,6 @@
 title: "User Guide"
 ---
 
-{{< pdf user_guide.pdf width=1000 height=600 >}}
+Our Shiny app is hosted at [ShinyApps](https://kjcpaas.shinyapps.io/isss608-202324g4/){target="_blank"}. This guide helps you understand how to use the application.
 
-Our Shiny app is hosted at [ShinyApps](https://kjcpaas.shinyapps.io/isss608-202324g4/). This guide helps you understand how to use the application.
+{{< pdf user_guide.pdf width=1000 height=600 >}}

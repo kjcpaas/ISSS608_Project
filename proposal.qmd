@@ -41,10 +41,6 @@ flowchart
   read[Read Input]
   clean[Clean Data]
   
-  extract_subnetwork[[Extract subnetwork]]
-  filter_date[[Filter by date]]
-  transform_power[[Transform power graph]]
-  
   degree[Calculate degree centrality]
   pagerank[Calculate pagerank centrality]
   betweenness[Calculate betweenness centrality]
@@ -52,7 +48,7 @@ flowchart
   plot_corp[Plot corporate structures]
   plot_network[Plot network graphs]
   plot_influence[Plot influence]
-  shiny[Shiny App]
+  shiny_app[Shiny App]
   
   combine_data[/Combine based on requirement\]
   combine_plots[/Combine plots\]
@@ -62,16 +58,21 @@ flowchart
   
   subgraph Data Preparation
     read --> clean
-    clean -.-> extract_subnetwork
-    clean -.-> filter_date
-    extract_subnetwork --> combine_data
-    filter_date --> combine
-    combine_data -.-> transform_power
-    clean -.-> transform_power
+    
+    subgraph transform_data[Transform Data]
+      extract_subnetwork[[Extract subnetwork]]
+      filter_date[[Filter by date]]
+      transform_power[[Transform power graph]]
+      
+      extract_subnetwork --> combine_data
+      filter_date --> combine_data
+      combine_data -.-> transform_power
+    end
+    
+    clean --> transform_data
   end
   
   subgraph Statistical Analysis
-    clean -.-> degree
     combine_data -.-> degree
     transform_power --> pagerank
     transform_power --> betweenness
@@ -82,8 +83,7 @@ flowchart
     degree --> plot_corp
     pagerank --> plot_influence
     betweenness --> plot_influence
-    transform_power --> plot_network
-    combine_data --> plot_network
+    transform_data --> plot_network
     plot_corp --> combine_plots
     plot_network --> combine_plots
     plot_influence --> combine_plots
@@ -131,6 +131,42 @@ flowchart
 
 ![](images/prototype.jpeg)
 
+Our shiny app will look at network and temporal patterns, with the network graph as the core visualizations, with other tables and charts as accompanying visualization.
+
+::: panel-tabset
+## Inputs
+
+The Shiny app will have 3 main parts of the input
+
+### Reference Node
+
+As the whole network is very large, containing of 60,520 nodes and 75,817 edges, it is not suitable to visualize the entire network.
+
+Hence, we will use a reference node to narrow down the network and only render the nodes in proximity to the reference node.
+
+### Network depth
+
+In relation to the reference node, this serves to narrow down the network to view. The depth dictates how far from the reference node to network.
+
+As networks are of different sizes, some networks would be fully shown at distance 2, but for some distance of 10 is not enough.
+
+Hence, we will add an option to toggle whether to render the full network or use the option to render by distance to the reference node.
+
+### Date
+
+As we are interested in temporal patterns, we also need to know the date to use in rendering. This is used to filter which edges need to show, and nodes will only be shown in the graph if they are connected to another node at that point in time.
+
+## Outputs
+
+### Plot area
+
+Shows the network plot. It will be interactive to enable closer inspection of network elements.
+
+### Temporal graph
+
+Shows a plot of attribute with respect to time (e.g. number of activities).
+:::
+
 # R Packages
 
 We used the following R packages
@@ -162,14 +198,8 @@ We used the following R packages
 
 -   [shinywidgets](https://shinyapps.dreamrs.fr/shinyWidgets/) - Extensions of shiny inputs
 
--   [shinyjs](https://deanattali.com/shinyjs/) - Executing JS code in shiny
+-   [shinyjs](https://deanattali.com/shinyjs/) - Executing JS code in shiny for enabling and disabling Shiny inputs
 :::
-
--   [tidyverse](https://www.tidyverse.org/): A collection of R packages used in data science, which includes [ggplot2](https://ggplot2.tidyverse.org/), [tibble](https://tibble.tidyverse.org/), [readr](https://readr.tidyverse.org/)
--   [vistime](https://github.com/shosaco/vistime): For visualizing timelines
--   [ggraph](https://ggraph.data-imaginist.com/): Extension of `ggplot2` for plotting relational data
--   [visNetwork](https://datastorm-open.github.io/visNetwork/): For plotting interactive network visualizations, compatible with Shiny
--   [jsonlite](https://cran.r-project.org/web/packages/jsonlite/index.html): For parsing JSON data
 
 # Project Schedule
 
